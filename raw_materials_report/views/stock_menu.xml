@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_open_raw_materials_wizard" model="ir.actions.act_window">
+        <field name="name">Звіт про сировину</field>
+        <field name="res_model">raw.materials.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="view_raw_materials_report_wizard_form"/>
+    </record>
+
+    <record id="action_raw_materials_report" model="ir.actions.server">
+        <field name="name">Звіт про прийом сировини</field>
+        <field name="model_id" ref="model_raw_materials_report_wizard"/>
+        <field name="state">code</field>
+        <field name="code">
+report_action = env.ref('raw_materials_report.raw_materials_report_action')
+new_wizard = env['raw.materials.report.wizard'].create({})
+action = report_action.report_action(new_wizard)
+action['close_on_report_download'] = True
+result = action</field>
+    </record>
+
+    <menuitem
+        id="menu_raw_materials_wizard"
+        name="Створити звіт про сировину"
+        action="action_open_raw_materials_wizard"
+        parent="stock.menu_warehouse_report"
+        sequence="110"/>
+
+    <menuitem
+        id="menu_raw_materials_report"
+        name="Звіт за місяць друк"
+        action="action_raw_materials_report"
+        parent="stock.menu_warehouse_report"
+        sequence="100"/>
+</odoo>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<odoo>-->
+<!--    <record id="action_raw_materials_report" model="ir.actions.server">-->
+<!--        <field name="name">Звіт про прийом сировини</field>-->
+<!--        <field name="model_id" ref="model_raw_materials_report_wizard"/>-->
+<!--        <field name="state">code</field>-->
+<!--        <field name="code">-->
+<!--report_action = env.ref('raw_materials_report.raw_materials_report_action')-->
+<!--new_wizard = env['raw.materials.report.wizard'].create({})-->
+<!--action = report_action.report_action(new_wizard)-->
+<!--action['close_on_report_download'] = True-->
+<!--result = action</field>-->
+<!--    </record>-->
+
+<!--    <menuitem-->
+<!--        id="menu_raw_materials_report"-->
+<!--        name="Звіт за місяць друк"-->
+<!--        action="action_raw_materials_report"-->
+<!--        parent="stock.menu_warehouse_report"-->
+<!--        sequence="100"/>-->
+<!--</odoo>-->
