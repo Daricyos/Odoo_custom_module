@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_raw_materials_report_wizard,access.raw.materials.report.wizard,model_raw_materials_report_wizard,stock.group_stock_user,1,1,1,1
