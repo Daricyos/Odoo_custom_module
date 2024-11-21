@@ -10,7 +10,7 @@
 <!--                    <field name="date_to"/>-->
                 </group>
                 <footer>
-                    <button name='action_gen_report' string="Друкувати" type="object" class="btn-primary"/>
+<!--                    <button name='action_gen_report' string="Друкувати" type="object" class="btn-primary"/>-->
                     <button special="cancel" string="Скасувати"/>
                 </footer>
             </form>
