@@ -28,3 +28,11 @@ class StockPicking(models.Model):
                         f'Файл "{attachment.name}" завеликий. '
                         f'Максимальний розмір файлу: 25MB'
                     )
+
+    def action_receiving_wood(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Надходження деревени',
+            'res_model': 'receiving.wood',
+            'view_mode': 'form',
+        }
