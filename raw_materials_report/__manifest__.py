@@ -11,9 +11,12 @@
     'data': [
         'data/paperformat.xml',
         'security/ir.model.access.csv',
-        'views/stock_menu.xml',
-        'reports/raw_materials_report.xml',
+
         'wizards/raw_materials_report_wizard_views.xml',
+        'reports/raw_materials_report.xml',
+
+        'views/stock_menu.xml',
+
     ],
     'external_dependencies': {
         'python': ['dateutil']
