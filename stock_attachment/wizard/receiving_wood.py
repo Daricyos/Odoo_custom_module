@@ -61,7 +61,9 @@ class ReceivingWood(models.Model):
             picking_type = self.env['stock.picking.type'].search([('name', '=', 'Надходження')],
                                                                  limit=1)
 
-            location_dest = self.env['stock.location'].search([('name', '=', 'СИРОВ/Запаси')], limit=1)
+            location_dest = self.env['stock.location'].search([('name', '=', 'Запаси')], limit=1)
+            if not location_dest:
+                raise ValidationError("Не знайдено локації 'СИРОВ/Запаси'.")
 
             picking_vals = {
                 'partner_id': record.partner_id.id,
