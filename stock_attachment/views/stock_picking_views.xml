@@ -15,7 +15,7 @@
                                 <field name="write_date" widget="date"/>
                                 <field name="mimetype"/>
                                 <field name="datas" widget="image" options="{'size': [100, 100]}"
-                                       invisible="mimetype not in ['image/jpeg', 'image/png', 'image/gif', 'image/webp']"/>
+                                        invisible="mimetype not in ['image/jpeg', 'image/png', 'image/gif', 'image/webp']" />
                                 <!-- Нова кнопка для прев'ю -->
                                 <button string="Переглянути"
                                         type="object"
@@ -44,9 +44,19 @@
                             </h2>
                         </div>
                     </group>
-
                 </page>
             </notebook>
+        </field>
+    </record>
+
+    <record id="view_picking_tree_inherit_attachment" model="ir.ui.view">
+        <field name="name">stock.picking.tree.inherit.attachment</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.vpicktree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree/header" position="inside">
+                 <button name="action_receiving_wood" display="always" type="object" string="Надходження деревени"/>
+            </xpath>
         </field>
     </record>
 </odoo>
