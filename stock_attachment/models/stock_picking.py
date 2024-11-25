@@ -13,7 +13,7 @@ class StockPicking(models.Model):
                 # Отримуємо розширення файлу
                 file_ext = os.path.splitext(attachment.name)[1].lower()
                 # Визначаємо дозволені розширення
-                allowed_extensions = ['.pdf', '.doc', '.docx', '.xls', '.xlsx', '.jpg', '.jpeg', '.png']
+                allowed_extensions = ['.pdf', '.doc', '.docx', '.xls', '.xlsx', '.txt', 'svg', '.jpg', '.jpeg', '.png']
 
                 if file_ext not in allowed_extensions:
                     raise ValidationError(
