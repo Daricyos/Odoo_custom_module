@@ -38,13 +38,13 @@
         </field>
     </record>
 
-    <record id="view_picking_tree_inherit_attachment" model="ir.ui.view">
-        <field name="name">stock.picking.tree.inherit.attachment</field>
-        <field name="model">stock.picking</field>
-        <field name="inherit_id" ref="stock.vpicktree"/>
+    <record id="view_picking_kanban_inherit_attachment" model="ir.ui.view">
+        <field name="name">stock.picking.kanban.inherit.attachment</field>
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.stock_picking_type_kanban"/>
         <field name="arch" type="xml">
-            <xpath expr="//tree/header" position="inside">
-                 <button name="action_receiving_wood" display="always" type="object" string="Надходження деревени"/>
+            <xpath expr="//kanban" position="attributes">
+                <attribute name="js_class">custom_kanban</attribute>
             </xpath>
         </field>
     </record>

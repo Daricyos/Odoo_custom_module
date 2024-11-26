@@ -20,14 +20,24 @@ Stock Picking Attachments
     'depends': ['stock'],
     'data': [
         'security/ir.model.access.csv',
-        'wizard/receiving_wood.xml',
+
+        'views/receiving_wood.xml',
         'views/stock_picking_views.xml',
+
         'views/ir_attachment_view.xml',
-
-
     ],
+
     'images': ['static/description/icon.svg'],
     'installable': True,
+
+    'assets': {
+        'web.assets_backend': [
+            # 'stock_attachment/static/src/js/kanban_button.js',
+            # 'stock_attachment/static/src/xml/inventory_kanban_button.xml'
+            'stock_attachment/static/src/**/*',
+        ],
+    },
+
     'application': True,
     'auto_install': False,
     'license': 'LGPL-3',

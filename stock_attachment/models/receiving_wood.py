@@ -6,17 +6,22 @@ class ReceivingWood(models.Model):
     _name = 'receiving.wood'
     _description = 'Receiving Wood'
 
-    partner_id = fields.Many2one('res.partner', 'Отримати з', required=True)
+    partner_id = fields.Many2one(
+        'res.partner',
+        'Отримати з',
+        required=True,
+        domain="[('category_id.name', '=', 'Постачальник')]"
+    )
     invoice_number = fields.Integer('Номер накладної', required=True)
 
     move_ids_without_package = fields.One2many(
         'receiving.wood.line', 'receiving_wood_id', string="Stock move")
-    document_ids = fields.Many2many('ir.attachment', string='Завантажити')
+    documents_ids = fields.One2many('ir.attachment', 'wood_line', string='Завантажити')
 
-    @api.constrains('document_ids')
+    @api.constrains('documents_ids')
     def _check_file_type(self):
         for record in self:
-            for attachment in record.document_ids:
+            for attachment in record.documents_ids:
                 # Отримуємо розширення файлу
                 file_ext = os.path.splitext(attachment.name)[1].lower()
                 # Визначаємо дозволені розширення
@@ -70,7 +75,7 @@ class ReceivingWood(models.Model):
                 'picking_type_id': picking_type.id,  # Замените на ваш picking_type_id
                 'origin': record.invoice_number,
                 'location_dest_id': location_dest.id,
-                'document_ids': [(6, 0, record.document_ids.ids)],
+                'document_ids': [(6, 0, record.documents_ids.ids)],
             }
             picking = stock_picking_obj.create(picking_vals)
 
@@ -92,6 +97,15 @@ class ReceivingWood(models.Model):
             picking.action_assign()
             picking.button_validate()
 
+            return {
+                'type': 'ir.actions.act_window',
+                'name': 'Надходження',  # Имя окна
+                'res_model': 'stock.picking',
+                'view_mode': 'form',
+                'res_id': picking.id,  # Открываем созданную запись
+                'target': 'current',  # Открывать в текущем окне
+            }
+
         return True
 
 
@@ -103,3 +117,9 @@ class ReceivingWoodLine(models.Model):
         'receiving.wood', string="Receiving Wood", ondelete='cascade')
     product_id = fields.Many2one('product.product', string="Продукт")
     quantity = fields.Float(string="Кількість")
+
+
+class IrAttachmentWoodLine(models.Model):
+    _inherit = 'ir.attachment'
+
+    wood_line = fields.Many2one('receiving.wood')
