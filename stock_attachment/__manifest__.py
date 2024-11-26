@@ -20,7 +20,6 @@ Stock Picking Attachments
     'depends': ['stock'],
     'data': [
         'security/ir.model.access.csv',
-        'wizard/receiving_wood.xml',
         'views/stock_picking_views.xml',
         'views/ir_attachment_view.xml',
 
