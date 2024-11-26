@@ -1,2 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_stock_picking_doc_user,stock.picking.document.user,stock.model_stock_picking,stock.group_stock_user,1,1,1,1
+stock_attachment.access_receiving_wood,access_receiving_wood,stock_attachment.model_receiving_wood,base.group_user,1,1,1,1
+stock_attachment.access_receiving_wood_line,access_receiving_wood_line,stock_attachment.model_receiving_wood_line,base.group_user,1,1,1,1
