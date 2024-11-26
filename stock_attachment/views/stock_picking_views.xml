@@ -16,23 +16,51 @@
                                 <field name="mimetype"/>
                                 <field name="datas" widget="image" options="{'size': [100, 100]}"
                                         invisible="mimetype not in ['image/jpeg', 'image/png', 'image/gif', 'image/webp']" />
-                                <!-- Нова кнопка для прев'ю -->
+
+                                    <!-- Нова кнопка завантаження -->
+                                <button string="Скачати"
+                                        type="object"
+                                        name="action_download_file"
+                                        icon="fa-download"
+                                        class="oe_button btn btn-outline-primary"/>
+
+                                 <!-- Нова кнопка для прев'ю -->
                                 <button string="Переглянути"
                                         type="object"
                                         name="action_preview_image"
                                         icon="fa-eye"
-                                        class="btn-primary"
+                                        class="oe_button btn btn-outline-primary mt-3"
                                         attrs="{'invisible': [('mimetype', 'not like', 'image/')]}"
                                         invisible="mimetype not in ['image/jpeg', 'image/png', 'image/gif', 'image/webp']"/>
                             </tree>
                         </field>
                     </group>
-                    <h2>
-                        Дозволені формати файлів: PDF, DOC, DOCX, XLS, XLSX, JPG, JPEG, PNG.
-                    </h2>
-                    <h2>
-                        Максимальний розмір: 25MB
-                    </h2>
+                    <style>
+                        .hide-uploaded-files .o_attachments,.ui-sortable .o_field_x2many_list_row_add a {
+                            display: none;
+                        }
+                        p{
+                            text-wrap: nowrap;
+                        }
+                        .o_list_button{
+                            display: flex;
+                            flex-direction: column;
+                            width:140px;
+                            height:100%;
+                        }
+                    </style>
+                    <group>
+                         <field name="document_ids" widget="many2many_binary" nolabel="1" class="hide-uploaded-files" mode="upload"
+                               options="{'accepted_file_extensions': '.pdf, .doc, .docx, .xls, .xlsx,.txt, .jpg, .jpeg, .png, .svg'}"/>
+                        <div>
+                            <p>
+                                Дозволені формати файлів: PDF, DOC, DOCX, XLS, XLSX, TXT, SVG, JPG, JPEG, PNG.
+                            </p>
+                            <p>
+                                Максимальний розмір: 25MB
+                            </p>
+                        </div>
+                    </group>
                 </page>
             </notebook>
         </field>
