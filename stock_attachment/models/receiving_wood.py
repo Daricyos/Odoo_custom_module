@@ -16,16 +16,16 @@ class ReceivingWood(models.Model):
 
     move_ids_without_package = fields.One2many(
         'receiving.wood.line', 'receiving_wood_id', string="Stock move")
-    documents_ids = fields.One2many('ir.attachment', 'wood_line', string='Завантажити')
+    document_ids = fields.Many2many('ir.attachment', string='Завантажити документи')
 
-    @api.constrains('documents_ids')
+    @api.constrains('document_ids')
     def _check_file_type(self):
         for record in self:
-            for attachment in record.documents_ids:
+            for attachment in record.document_ids:
                 # Отримуємо розширення файлу
                 file_ext = os.path.splitext(attachment.name)[1].lower()
                 # Визначаємо дозволені розширення
-                allowed_extensions = ['.pdf', '.doc', '.docx', '.xls', '.xlsx', '.jpg', '.jpeg', '.png']
+                allowed_extensions = ['.pdf', '.doc', '.docx', '.xls', '.xlsx', '.txt', 'svg', '.jpg', '.jpeg', '.png']
 
                 if file_ext not in allowed_extensions:
                     raise ValidationError(
@@ -75,7 +75,7 @@ class ReceivingWood(models.Model):
                 'picking_type_id': picking_type.id,  # Замените на ваш picking_type_id
                 'origin': record.invoice_number,
                 'location_dest_id': location_dest.id,
-                'document_ids': [(6, 0, record.documents_ids.ids)],
+                'document_ids': [(6, 0, record.document_ids.ids)],
             }
             picking = stock_picking_obj.create(picking_vals)
 
@@ -117,9 +117,3 @@ class ReceivingWoodLine(models.Model):
         'receiving.wood', string="Receiving Wood", ondelete='cascade')
     product_id = fields.Many2one('product.product', string="Продукт")
     quantity = fields.Float(string="Кількість")
-
-
-class IrAttachmentWoodLine(models.Model):
-    _inherit = 'ir.attachment'
-
-    wood_line = fields.Many2one('receiving.wood')
