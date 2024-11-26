@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+   <t t-name="stock_attachment.KanbanView.Buttons" t-inherit="web.KanbanView.Buttons" t-inherit-mode="primary">
+      <xpath expr="//div[hasclass('o_cp_buttons')]" position="after">
+           <button type="button" class="btn btn-primary" t-on-click="onReceivingWoodClick">
+               Надходження деревени
+           </button>
+       </xpath>
+   </t>
+</templates>

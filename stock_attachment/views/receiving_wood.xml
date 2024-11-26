@@ -1,0 +1,55 @@
+<odoo>
+    <record id="view_receiving_wood_form" model="ir.ui.view">
+        <field name="name">receiving.wood.form</field>
+        <field name="model">receiving.wood</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_create_operations" display="always" type="object" string="Приняти" />
+                </header>
+                <group>
+                    <group>
+                        <field name="partner_id"/>
+                    </group>
+                    <group>
+                        <field name="invoice_number"/>
+                    </group>
+                    <group string="Завантаження докуентів">
+                        <field name="documents_ids" colspan="4" nolabel="1">
+                            <tree>
+                                <field name="name"/>
+                                <field name="create_date" widget="date"/>
+                                <field name="write_date" widget="date"/>
+                                <field name="mimetype"/>
+                                <field name="datas" widget="image" options="{'size': [100, 100]}"
+                                        invisible="mimetype not in ['image/jpeg', 'image/png', 'image/gif', 'image/webp']" />
+
+                                <button string="Переглянути"
+                                        type="object"
+                                        name="action_preview_image"
+                                        icon="fa-eye"
+                                        class="btn-primary"
+                                        attrs="{'invisible': [('mimetype', 'not like', 'image/')]}"
+                                        invisible="mimetype not in ['image/jpeg', 'image/png', 'image/gif', 'image/webp']"/>
+                            </tree>
+                        </field>
+                    </group>
+                </group>
+                <notebook>
+                    <page string="Operations" name="operations">
+                        <field name="move_ids_without_package" widget="One2many_tags">
+                            <tree editable="1">
+                                <field name="product_id"/>
+                                <field name="quantity">
+                                    <attribute name="options">
+                                        {"unit": "m³"}
+                                    </attribute>
+                                </field>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </form>
+        </field>
+    </record>
+</odoo>

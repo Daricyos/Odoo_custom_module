@@ -4,6 +4,7 @@ from odoo import models, fields, api
 from odoo.exceptions import ValidationError, UserError
 import os
 
+
 class StockPicking(models.Model):
     _inherit = 'stock.picking'
     document_ids = fields.Many2many('ir.attachment', string='Завантажити документи')
@@ -45,6 +46,16 @@ class StockPicking(models.Model):
 #             if attachment.file_size > max_size:
 #                  raise ValidationError(
 #                     f'Файл "{attachment.name}" завеликий. '
-#                     f'Максимальний розмір файлу: 25MB')
+#                     f'Максимальний розмір файлу: 25MB')man
 
-# ////////////////////////////////
+class StockPickingType(models.Model):
+    _inherit = 'stock.picking.type'
+
+    @api.model
+    def action_receiving_wood(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Надходження деревени',
+            'res_model': 'receiving.wood',
+            'view_mode': 'form',
+        }
