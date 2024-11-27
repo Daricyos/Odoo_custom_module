@@ -66,9 +66,17 @@ class ReceivingWood(models.Model):
             picking_type = self.env['stock.picking.type'].search([('name', '=', 'Надходження')],
                                                                  limit=1)
 
-            location_dest = self.env['stock.location'].search([('name', '=', 'Запаси'), ('location_id', '=', 'СИРОВ')], limit=1)
+            location_dest = self.env['stock.location'].search(
+                [('name', '=', 'Запаси'), ('location_id', '=', 'СИРОВ')], limit=1)
+
             if not location_dest:
                 raise ValidationError("Не знайдено локації 'СИРОВ/Запаси'.")
+
+            location_dest_stock_move = self.env['stock.location'].search(
+                [('name', '=', 'Vendors'), ('location_id', '=', 'Partners')], limit=1)
+
+            if not location_dest_stock_move:
+                raise ValidationError("Не знайдено локації 'Vendors/Partners'.")
 
             picking_vals = {
                 'partner_id': record.partner_id.id,
@@ -88,13 +96,12 @@ class ReceivingWood(models.Model):
                     'quantity': move_line.quantity,
                     'name': move_line.product_id.name,
                     'product_uom': move_line.product_id.uom_id.id,
-                    'location_id': location_dest.id,
+                    'description_picking': move_line.product_id.name,
+                    'location_id': location_dest_stock_move.id,
                     'location_dest_id': location_dest.id,
                 }
                 stock_move_obj.create(move_vals)
 
-            picking.action_confirm()
-            picking.action_assign()
             picking.button_validate()
 
             return {
