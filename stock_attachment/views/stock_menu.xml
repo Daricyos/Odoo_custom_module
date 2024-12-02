@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Додавання нового пункту меню в розділ складу -->
+    <menuitem
+            id="menu_operations_main"
+            name="Складські операції"
+            parent="stock.menu_stock_root"
+            sequence="100"/>
+
+    <menuitem
+            id="menu_chop_logs"
+            name="Розпил Кряжів"
+            parent="menu_operations_main"
+            action="action_chopping_logs"
+            sequence="11"/>
+
+    <menuitem
+            id="menu_receiving_blocks"
+            name="Прийом Чураку"
+            parent="menu_operations_main"
+            action="action_receiving_blocks"
+            sequence="12"/>
+
+    <menuitem
+            id="menu_blocks_drying"
+            name="Сушіння Чураку"
+            parent="menu_operations_main"
+            action="action_blocks_drying"
+            sequence="13"/>
+
+    <menuitem
+            id="menu_receiving_dry_blocks"
+            name="Прийом Сухого Чураку"
+            parent="menu_operations_main"
+            action="action_receiving_dry_blocks"
+            sequence="14"/>
+
+    <menuitem
+            id="menu_blocks_peeling"
+            name="Лушіння Чураку"
+            parent="menu_operations_main"
+            action="action_blocks_peeling"
+            sequence="15"/>
+</odoo>
+
+
+        <!--<?xml version="1.0" encoding="utf-8"?>-->
+        <!--<odoo>-->
+        <!--    <record id="action_raw_materials_report" model="ir.actions.server">-->
+        <!--        <field name="name">Звіт про прийом сировини</field>-->
+        <!--        <field name="model_id" ref="model_raw_materials_report_wizard"/>-->
+        <!--        <field name="state">code</field>-->
+        <!--        <field name="code">-->
+        <!--report_action = env.ref('raw_materials_report.raw_materials_report_action')-->
+        <!--new_wizard = env['raw.materials.report.wizard'].create({})-->
+        <!--action = report_action.report_action(new_wizard)-->
+        <!--action['close_on_report_download'] = True-->
+        <!--result = action</field>-->
+        <!--    </record>-->
+
+        <!--    <menuitem-->
+        <!--        id="menu_raw_materials_report"-->
+        <!--        name="Звіт за місяць друк"-->
+        <!--        action="action_raw_materials_report"-->
+        <!--        parent="stock.menu_warehouse_report"-->
+        <!--        sequence="100"/>-->
+        <!--</odoo>-->
