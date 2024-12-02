@@ -25,6 +25,9 @@ Stock Picking Attachments
         'views/stock_picking_views.xml',
 
         'views/ir_attachment_view.xml',
+
+        'views/operations_view.xml',
+        'views/stock_menu.xml',
     ],
 
     'images': ['static/description/icon.svg'],
