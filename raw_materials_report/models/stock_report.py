@@ -133,3 +133,4 @@ class RawMaterialsReport(models.AbstractModel):
 class RawMaterialsReportWizard(models.TransientModel):
     _name = 'raw.materials.report.wizard'
     _description = 'Майстер звіту про прийом сировини'
+    
