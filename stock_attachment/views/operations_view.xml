@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--///////////   Розпил кряжів    //////////////////////-->
+    <record id="action_chopping_logs" model="ir.actions.act_window">
+        <field name="name">Розпил Кряжів</field>
+        <field name="res_model">chop.logs</field>
+        <field name="view_mode">form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new operation
+            </p>
+        </field>
+    </record>
+
+    <record id="action_chopping_logs_form" model="ir.ui.view">
+        <field name="name">chop.logs.form</field>
+        <field name="model">chop.logs</field>
+        <field name="arch" type="xml">
+            <form string="Розпил Кряжів">
+                <sheet>
+                    <group>
+                    <group>
+                        <field name="responsible"/>
+                        <field name="partner_id"/>
+                    </group>
+                    <group>
+                        <field name="steamed_bich_A"/>
+                        <field name="steamed_bich_B"/>
+                        <field name="steamed_bich_C"/>
+                        <field name="steamed_bich_D"/>
+                    </group>
+                </group>
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
+
+    <!--//////////////  Прийом Чураку  ///////////////////-->
+    <record id="action_receiving_blocks" model="ir.actions.act_window">
+        <field name="name">Прийом Чураку</field>
+        <field name="res_model">receiving.blocks</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new operation
+            </p>
+        </field>
+    </record>
+
+    <record id="action_blocks_drying" model="ir.actions.act_window">
+        <field name="name">Сушіння Чураку</field>
+        <field name="res_model">blocks.drying</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new operation
+            </p>
+        </field>
+    </record>
+
+    <record id="action_receiving_dry_blocks" model="ir.actions.act_window">
+        <field name="name">Прийом Сухого Чураку</field>
+        <field name="res_model">receiving.dry.blocks</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new operation
+            </p>
+        </field>
+    </record>
+
+    <record id="action_blocks_peeling" model="ir.actions.act_window">
+        <field name="name">Лущіння Чураку</field>
+        <field name="res_model">blocks.peeling</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new operation
+            </p>
+        </field>
+    </record>
+</odoo>
