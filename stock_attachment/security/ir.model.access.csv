@@ -3,7 +3,12 @@ access_stock_picking_doc_user,stock.picking.document.user,stock.model_stock_pick
 stock_attachment.access_receiving_wood,access_receiving_wood,stock_attachment.model_receiving_wood,base.group_user,1,1,1,1
 stock_attachment.access_receiving_wood_line,access_receiving_wood_line,stock_attachment.model_receiving_wood_line,base.group_user,1,1,1,1
 access_chop_logs,access.chop.logs,model_chop_logs,stock.group_stock_user,1,1,1,1
+access_chop_logs_line,access.chop.logs.line,model_chop_logs_line,stock.group_stock_user,1,1,1,1
 access_receiving_blocks,access.receiving.blocks,model_receiving_blocks,stock.group_stock_user,1,1,1,1
+access_receiving_blocks_line,access.receiving.blocks.line,model_receiving_blocks_line,stock.group_stock_user,1,1,1,1
 access_blocks_drying,access_blocks.drying,model_blocks_drying,stock.group_stock_user,1,1,1,1
+access_blocks_drying_line,access_blocks.drying.line,model_blocks_drying_line,stock.group_stock_user,1,1,1,1
 access_receiving_dry_blocks,access_receiving.dry.blocks,model_receiving_dry_blocks,stock.group_stock_user,1,1,1,1
+access_receiving_dry_blocks_line,access_receiving.dry.blocks.line,model_receiving_dry_blocks_line,stock.group_stock_user,1,1,1,1
 access_blocks_peeling,access_blocks.peeling,model_blocks_peeling,stock.group_stock_user,1,1,1,1
+access_blocks_peeling_line,access_blocks.peeling.line,model_blocks_peeling_line,stock.group_stock_user,1,1,1,1
