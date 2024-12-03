@@ -1,0 +1,115 @@
+<odoo>
+    <template id="aggregated_foreman_report_form_template">
+        <t t-name="raw_materials_report.aggregated_foreman_report_form">
+            <div class="o_form_view">
+              <div class="page">
+                <h2>Інформація по роботі біржі лісоматеріалів</h2>
+                <h3>Форма №1 (Щоденний звіт)</h3>
+
+                <h4>1. Залишок лісоматеріалів (станом на дату)</h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Сорт</th>
+                            <th>Об'єм (м³)</th>
+                            <th>%</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>A</td>
+                            <td><input type="text" placeholder="Об'єм (м³)" /></td>
+                            <td><input type="text" placeholder="%" /></td>
+                        </tr>
+                        <tr>
+                            <td>B</td>
+                            <td><input type="text" placeholder="Об'єм (м³)" /></td>
+                            <td><input type="text" placeholder="%" /></td>
+                        </tr>
+                        <tr>
+                            <td>C</td>
+                            <td><input type="text" placeholder="Об'єм (м³)" /></td>
+                            <td><input type="text" placeholder="%" /></td>
+                        </tr>
+                        <tr>
+                            <td>D</td>
+                            <td><input type="text" placeholder="Об'єм (м³)" /></td>
+                            <td><input type="text" placeholder="%" /></td>
+                        </tr>
+                        <tr>
+                            <td>Всього</td>
+                            <td><input type="text" placeholder="Об'єм (м³)" /></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>2. Прихід буку по накладним від постачальників (за день)</h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>№ п/п</th>
+                            <th>Постачальник</th>
+                            <th>Водій</th>
+                            <th>Номер накладної</th>
+                            <th>Об'єм (м³)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="text" placeholder="№ п/п" /></td>
+                            <td><input type="text" placeholder="Постачальник" /></td>
+                            <td><input type="text" placeholder="Водій" /></td>
+                            <td><input type="text" placeholder="Номер накладної" /></td>
+                            <td><input type="text" placeholder="Об'єм (м³)" /></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" style="text-align: right;">Всього за день:</td>
+                            <td><input type="text" placeholder="Об'єм (м³)" /></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" style="text-align: right;">З початку місяця:</td>
+                            <td><input type="text" placeholder="Об'єм (м³)" /></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>3. Розхід буку (кругляка) на сторону</h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Дата</th>
+                            <th>Водій</th>
+                            <th>№ накладної</th>
+                            <th>Кому</th>
+                            <th>Об'єм</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="text" placeholder="Дата" /></td>
+                            <td><input type="text" placeholder="Водій" /></td>
+                            <td><input type="text" placeholder="№ накладної" /></td>
+                            <td><input type="text" placeholder="Кому" /></td>
+                            <td><input type="text" placeholder="Об'єм" /></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" style="text-align: right;">За день:</td>
+                            <td><input type="text" placeholder="Об'єм" /></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" style="text-align: right;">За місяць:</td>
+                            <td><input type="text" placeholder="Об'єм" /></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>4. Прихід буку, фактична приймка</h4>
+                <h4>5. Розхід буку на лущення</h4>
+                <h4>6. Фактичний залишок буку</h4>
+                <h4>7. Розкряжовка пиловника</h4>
+              </div>
+            </div>
+        </t>
+    </template>
+</odoo>
