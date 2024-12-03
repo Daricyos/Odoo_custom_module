@@ -20,10 +20,10 @@ action['close_on_report_download'] = True
 result = action</field>
     </record>
 
-    <record id="action_aggregated_foreman_report" model="ir.actions.client">
+    <record id="action_aggregated_foreman_reports" model="ir.actions.act_url">
         <field name="name">Агрегована форма бригадира</field>
-      <field name="model_id" ref="model_raw_materials_report_wizard"/>
-        <field name="tag">raw_materials_report.aggregated_foreman_report_form</field>
+        <field name="url">/aggregated_foreman_report</field>
+        <field name="target">new</field>
     </record>
 
     <menuitem
@@ -43,7 +43,7 @@ result = action</field>
     <menuitem 
         id="menu_daily_material_report" 
         name="Агрегована форма бригадира" 
-        action="action_aggregated_foreman_report" 
+        action="action_aggregated_foreman_reports"
         parent="stock.menu_warehouse_report" 
         sequence="20"/>
 
