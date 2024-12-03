@@ -13,13 +13,15 @@ class ChopLogs(models.Model):
         'stock.warehouse',  # Модель складів в Odoo
         string='Отримати з',  # Назва поля
         required=True,  # Опційно: зробити обов'язковим
-        default=lambda self: self.env['stock.warehouse'].search([], limit=1)  # Опційно: default перший склад
+        default=lambda self: self.env['stock.warehouse'].search([('name', 'in',
+              ['Прийом сировини'])], limit=1)  # Опційно: default перший склад
     )
     warehouse_to_id = fields.Many2one(
         'stock.warehouse',  # Модель складів в Odoo
         string='Відправити в',  # Назва поля
         required=True,  # Опційно: зробити обов'язковим
-        default=lambda self: self.env['stock.warehouse'].search([], limit=1)  # Опційно: default перший склад
+        default=lambda self: self.env['stock.warehouse'].search([('name', 'in',
+              ['Біржа-1'])], limit=1)  # Опційно: default перший склад
     )
     invoice_number = fields.Integer('Номер накладної', required=True)
 
@@ -37,6 +39,70 @@ class ChopLogs(models.Model):
             move_lines.append((0, 0, {'product_id': product.id, 'quantity': 0.0}))
         res['move_ids_without_package'] = move_lines
         return res
+
+    # def action_create_operations(self):
+    #     stock_picking_obj = self.env['stock.picking']
+    #     stock_move_obj = self.env['stock.move']
+    #
+    #     for record in self:
+    #
+    #         valid_moves = record.move_ids_without_package.filtered(lambda line: line.quantity > 0)
+    #         print(valid_moves)
+    #
+    #         if not valid_moves:
+    #             raise ValidationError("Не знайдено продуктів з кількістю більше 0.")
+    #
+    #         picking_type = self.env['stock.picking.type'].search([('name', '=', 'Надходження')],
+    #                                                              limit=1)
+    #
+    #         location_dest = self.env['stock.location'].search(
+    #             [('name', '=', 'Запаси'), ('location_id', '=', 'СИРОВ')], limit=1)
+    #
+    #         if not location_dest:
+    #             raise ValidationError("Не знайдено локації 'СИРОВ/Запаси'.")
+    #
+    #         location_dest_stock_move = self.env['stock.location'].search(
+    #             [('name', '=', 'Vendors'), ('location_id', '=', 'Partners')], limit=1)
+    #
+    #         if not location_dest_stock_move:
+    #             raise ValidationError("Не знайдено локації 'Vendors/Partners'.")
+    #
+    #         picking_vals = {
+    #             'partner_id': record.partner_id.id,
+    #             'picking_type_id': picking_type.id,  # Замените на ваш picking_type_id
+    #             'origin': record.invoice_number,
+    #             'location_dest_id': location_dest.id,
+    #             'document_ids': [(6, 0, record.document_ids.ids)],
+    #         }
+    #         picking = stock_picking_obj.create(picking_vals)
+    #
+    #         for move_line in valid_moves:
+    #             print(move_line.product_id.name)
+    #             move_vals = {
+    #                 'picking_id': picking.id,
+    #                 'product_id': move_line.product_id.id,
+    #                 'product_uom_qty': move_line.quantity,
+    #                 'quantity': move_line.quantity,
+    #                 'name': move_line.product_id.name,
+    #                 'product_uom': move_line.product_id.uom_id.id,
+    #                 'description_picking': move_line.product_id.name,
+    #                 'location_id': location_dest_stock_move.id,
+    #                 'location_dest_id': location_dest.id,
+    #             }
+    #             stock_move_obj.create(move_vals)
+    #
+    #         picking.button_validate()
+    #
+    #         return {
+    #             'type': 'ir.actions.act_window',
+    #             'name': 'Надходження',  # Имя окна
+    #             'res_model': 'stock.picking',
+    #             'view_mode': 'form',
+    #             'res_id': picking.id,  # Открываем созданную запись
+    #             'target': 'current',  # Открывать в текущем окне
+    #         }
+    #
+    #     return True
 
 
 class ChopLogsLine(models.Model):
@@ -59,13 +125,15 @@ class ReceivingBlocks(models.Model):
         'stock.warehouse',  # Модель складів в Odoo
         string='Отримати з',  # Назва поля
         required=True,  # Опційно: зробити обов'язковим
-        default=lambda self: self.env['stock.warehouse'].search([], limit=1)  # Опційно: default перший склад
+        default=lambda self: self.env['stock.warehouse'].search([('name', 'in',
+              ['Біржа-1'])], limit=1)  # Опційно: default перший склад
     )
     warehouse_to_id = fields.Many2one(
         'stock.warehouse',  # Модель складів в Odoo
         string='Відправити в',  # Назва поля
         required=True,  # Опційно: зробити обов'язковим
-        default=lambda self: self.env['stock.warehouse'].search([], limit=1)  # Опційно: default перший склад
+        default=lambda self: self.env['stock.warehouse'].search([('name', 'in',
+              ['Прийом сировини'])], limit=1)  # Опційно: default перший склад
     )
     invoice_number = fields.Integer('Номер накладної', required=True)
     move_ids_without_package = fields.One2many(
@@ -105,13 +173,15 @@ class BlocksDrying(models.Model):
         'stock.warehouse',  # Модель складів в Odoo
         string='Отримати з',  # Назва поля
         required=True,  # Опційно: зробити обов'язковим
-        default=lambda self: self.env['stock.warehouse'].search([], limit=1)  # Опційно: default перший склад
+        default=lambda self: self.env['stock.warehouse'].search([('name', 'in',
+                ['Прийом сировини'])], limit=1) # Опційно: default перший склад
     )
     warehouse_to_id = fields.Many2one(
         'stock.warehouse',  # Модель складів в Odoo
         string='Відправити в',  # Назва поля
         required=True,  # Опційно: зробити обов'язковим
-        default=lambda self: self.env['stock.warehouse'].search([], limit=1)  # Опційно: default перший склад
+        default=lambda self: self.env['stock.warehouse'].search([('name', 'in',
+                ['Біржа-1'])], limit=1) # Опційно: default перший склад
     )
     invoice_number = fields.Integer('Номер накладної', required=True)
     move_ids_without_package = fields.One2many(
@@ -150,13 +220,15 @@ class ReceivingDryBlocks(models.Model):
         'stock.warehouse',  # Модель складів в Odoo
         string='Отримати з',  # Назва поля
         required=True,  # Опційно: зробити обов'язковим
-        default=lambda self: self.env['stock.warehouse'].search([], limit=1)  # Опційно: default перший склад
+        default=lambda self: self.env['stock.warehouse'].search([('name', 'in',
+                ['Біржа-1'])], limit=1) # Опційно: default перший склад
     )
     warehouse_to_id = fields.Many2one(
         'stock.warehouse',  # Модель складів в Odoo
         string='Відправити в',  # Назва поля
         required=True,  # Опційно: зробити обов'язковим
-        default=lambda self: self.env['stock.warehouse'].search([], limit=1)  # Опційно: default перший склад
+        default=lambda self: self.env['stock.warehouse'].search([('name', 'in',
+                ['Прийом сировини'])], limit=1)# Опційно: default перший склад
     )
     invoice_number = fields.Integer('Номер накладної', required=True)
     move_ids_without_package = fields.One2many(
@@ -195,13 +267,15 @@ class BlocksPeeling(models.Model):
         'stock.warehouse',  # Модель складів в Odoo
         string='Отримати з',  # Назва поля
         required=True,  # Опційно: зробити обов'язковим
-        default=lambda self: self.env['stock.warehouse'].search([], limit=1)  # Опційно: default перший склад
+        default=lambda self: self.env['stock.warehouse'].search([('name', 'in',
+                ['Прийом сировини'])], limit=1) # Опційно: default перший склад
     )
     warehouse_to_id = fields.Many2one(
         'stock.warehouse',  # Модель складів в Odoo
         string='Відправити в',  # Назва поля
         required=True,  # Опційно: зробити обов'язковим
-        default=lambda self: self.env['stock.warehouse'].search([], limit=1)  # Опційно: default перший склад
+        default=lambda self: self.env['stock.warehouse'].search([('name', 'in',
+                 ['Біржа-1'])], limit=1) # Опційно: default перший склад
     )
     invoice_number = fields.Integer('Номер накладної', required=True)
     move_ids_without_package = fields.One2many(
