@@ -157,6 +157,7 @@ class BlocksDrying(models.Model):
                 picking = stock_picking_obj.create(picking_vals)
 
                 picking.action_confirm()
+                picking.button_mark_done()
 
 
 
