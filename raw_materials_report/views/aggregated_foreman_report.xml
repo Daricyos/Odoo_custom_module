@@ -92,6 +92,7 @@
                     /* Section Container */
                     .o_section {
                         margin-bottom: 20px; /* Space between sections */
+                        margin-top: 30px;
                     }
 
                     /* Section Label */
@@ -409,7 +410,7 @@
 
                     <!-- Section 6 -->
                     <div class="o_section">
-                        <h4 class="o_section_label">6. Фактичний залишок буку по сортам</h4>
+                        <h4 class="o_section_label">6. Фактичний залишок буку по сортам:</h4>
                     </div>
 
                     <table class="o_table_general">
@@ -477,10 +478,59 @@
                         </tbody>
                     </table>
 
+                    <!-- Section 7 -->
+                    <div class="o_section">
+                        <h4 class="o_section_label">7. Розкряжовка пиловника (бук):</h4>
+                    </div>
 
-
-
-
+                    <table class="o_table_general">
+                        <thead>
+                            <tr>
+                                <th>Vпил (м³)</th>
+                                <th>Vчур (м³)</th>
+                                <th>%вих</th>
+                                <th colspan="2">Дрова, всього</th>
+                                <th colspan="2">Дрова на кот.</th>
+                                <th colspan="2">Дрова на палет</th>
+                                <th>Всього р-д пиловника (м³)</th>
+                                <th>%вих (п.2/п.10)</th>
+                                <th>День</th>
+                                <th>Місяць</th>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th>Об'єм (м³)</th>
+                                <th>%вих</th>
+                                <th>Об'єм (м³)</th>
+                                <th>%</th>
+                                <th>Об'єм (м³)</th>
+                                <th>%</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="text" value="120.0" /></td>
+                                <td><input type="text" value="50.0" /></td>
+                                <td><input type="text" value="80%" /></td>
+                                <td><input type="text" value="20.0" /></td>
+                                <td><input type="text" value="10%" /></td>
+                                <td><input type="text" value="10.0" /></td>
+                                <td><input type="text" value="5%" /></td>
+                                <td><input type="text" value="10.0" /></td>
+                                <td><input type="text" value="5%" /></td>
+                                <td><input type="text" value="170.0" /></td>
+                                <td><input type="text" value="47%" /></td>
+                                <td><input type="text" value="5.0" /></td>
+                                <td><input type="text" value="20.0" /></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </t>
