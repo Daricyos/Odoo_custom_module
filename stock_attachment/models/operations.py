@@ -1,3 +1,5 @@
+from itertools import product
+
 from odoo import api, fields, models
 import os
 from odoo.exceptions import ValidationError
@@ -183,9 +185,11 @@ class BlocksDrying(models.Model):
         default=lambda self: self.env['stock.warehouse'].search([('name', 'in',
                 ['Біржа-1'])], limit=1) # Опційно: default перший склад
     )
-    invoice_number = fields.Integer('Номер накладної', required=True)
+
+    name = fields.Integer('Номер накладної', required=True)
     move_ids_without_package = fields.One2many(
         'blocks.drying.line', 'receiving_wood_id', string="Stock move")
+
     document_ids = fields.Many2many('ir.attachment', string='Завантажити документи')
 
     @api.model
@@ -199,6 +203,33 @@ class BlocksDrying(models.Model):
             move_lines.append((0, 0, {'product_id': product.id, 'quantity': 0.0}))
         res['move_ids_without_package'] = move_lines
         return res
+
+    def action_create_operations(self):
+        stock_picking_obj = self.env['mrp.production']
+
+        for record in self:
+            valid_moves = record.move_ids_without_package.filtered(lambda line: line.quantity > 0)
+
+            if not valid_moves:
+                raise ValidationError("Не знайдено продуктів з кількістю більше 0.")
+
+            # picking_type = self.env['stock.picking.type'].search([('name', '=', 'Виробництво')],
+            #                                                      limit=1)
+
+            for obj in valid_moves:
+                product_id = self.env['product.product'].search(
+                    [('name', '=', f'Сушений {obj.product_id.name}')], limit=1)
+
+                picking_vals = {
+                    'product_id': product_id.id,
+                    'product_qty': obj.quantity,
+                }
+                picking = stock_picking_obj.create(picking_vals)
+
+                picking.action_confirm()
+
+
+
 
 class BlocksDryingLine(models.Model):
     _name = 'blocks.drying.line'
@@ -271,7 +302,7 @@ class BlocksPeeling(models.Model):
                 ['Прийом сировини'])], limit=1) # Опційно: default перший склад
     )
     warehouse_to_id = fields.Many2one(
-        'stock.warehouse',  # Модель складів в Odoo
+        'stock.warehouse',
         string='Відправити в',  # Назва поля
         required=True,  # Опційно: зробити обов'язковим
         default=lambda self: self.env['stock.warehouse'].search([('name', 'in',
@@ -294,6 +325,8 @@ class BlocksPeeling(models.Model):
             move_lines.append((0, 0, {'product_id': product.id, 'quantity': 0.0}))
         res['move_ids_without_package'] = move_lines
         return res
+
+
 
 class BlocksPeelingLine(models.Model):
     _name = 'blocks.peeling.line'
