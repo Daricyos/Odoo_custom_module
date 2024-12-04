@@ -20,13 +20,12 @@
             <form>
                 <sheet>
                     <header>
-                    <h1>Розпил Кряжів</h1>
-<!--                    <button name="action_create_operations" display="always" type="object" string="Приняти" />-->
+                        <button name="action_create_operations" type="object" string="Розпил Кряжів" class="oe_highlight"/>
                 </header>
                 <group>
                     <group>
-                        <field name="partner_id"/>
-                        <field name="warehouse_to_id"/>
+                        <field name="partner_id" readonly="1"/>
+                        <field name="warehouse_to_id" readonly="1"/>
                     </group>
                     <group>
                         <field name="invoice_number"/>
@@ -126,13 +125,12 @@
             <form>
                 <sheet>
                     <header>
-                    <h1>Прийом Чураку</h1>
-<!--                    <button name="action_create_operations" display="always" type="object" string="Приняти" />-->
+                        <button name="action_create_operations" type="object" string="Прийом Чураку" class="oe_highlight"/>
                 </header>
                 <group>
                     <group>
-                        <field name="partner_id"/>
-                        <field name="warehouse_to_id"/>
+                        <field name="partner_id" readonly="1"/>
+                        <field name="warehouse_to_id" readonly="1"/>
                     </group>
                     <group>
                         <field name="invoice_number"/>
@@ -346,14 +344,12 @@
             <form>
                 <sheet>
                     <header>
-
-                        <h1>Прийом Сухого Чураку</h1>
-    <!--                    <button name="action_create_operations" display="always" type="object" string="Приняти" />-->
+                        <button name="action_create_operations" type="object" string="Прийом Сухого Чураку" class="oe_highlight"/>
                     </header>
                     <group>
                         <group>
-                            <field name="partner_id"/>
-                            <field name="warehouse_to_id"/>
+                            <field name="partner_id" readonly="1"/>
+                            <field name="warehouse_to_id" readonly="1"/>
                         </group>
                         <group>
                             <field name="invoice_number"/>
@@ -453,13 +449,12 @@
             <form>
                 <sheet>
                     <header>
-                    <h1>Лущіння Чураку</h1>
-<!--                    <button name="action_create_operations" display="always" type="object" string="Приняти" />-->
+                    <button name="action_create_operations" type="object" string="Лущіння Чураку" class="oe_highlight"/>
                 </header>
                 <group>
                     <group>
-                        <field name="partner_id"/>
-                        <field name="warehouse_to_id"/>
+                        <field name="partner_id" readonly="1"/>
+                        <field name="warehouse_to_id" readonly="1"/>
                     </group>
                     <group>
                         <field name="invoice_number"/>
