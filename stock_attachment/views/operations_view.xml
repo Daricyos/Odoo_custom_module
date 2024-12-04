@@ -29,7 +29,7 @@
                     </group>
                     <group>
                         <field name="invoice_number"/>
-                        <field name="responsible"/>
+                        <field name="responsible" readonly="1"/>
                     </group>
                     <group string="Завантаження документів">
                         <group>
@@ -134,7 +134,7 @@
                     </group>
                     <group>
                         <field name="invoice_number"/>
-                        <field name="responsible"/>
+                        <field name="responsible" readonly="1"/>
                     </group>
                     <group string="Завантаження документів">
                         <group>
@@ -353,7 +353,7 @@
                         </group>
                         <group>
                             <field name="invoice_number"/>
-                            <field name="responsible"/>
+                            <field name="responsible" readonly="1"/>
                         </group>
                         <group string="Завантаження документів">
                             <group>
@@ -458,7 +458,7 @@
                     </group>
                     <group>
                         <field name="invoice_number"/>
-                        <field name="responsible"/>
+                        <field name="responsible" readonly="1"/>
                     </group>
                     <group string="Завантаження документів">
                         <group>
