@@ -58,7 +58,6 @@ class ReceivingWood(models.Model):
         for record in self:
 
             valid_moves = record.move_ids_without_package.filtered(lambda line: line.quantity > 0)
-            print(valid_moves)
 
             if not valid_moves:
                 raise ValidationError("Не знайдено продуктів з кількістю більше 0.")
@@ -80,7 +79,7 @@ class ReceivingWood(models.Model):
 
             picking_vals = {
                 'partner_id': record.partner_id.id,
-                'picking_type_id': picking_type.id,  # Замените на ваш picking_type_id
+                'picking_type_id': picking_type.id,
                 'origin': record.invoice_number,
                 'location_dest_id': location_dest.id,
                 'document_ids': [(6, 0, record.document_ids.ids)],
@@ -88,7 +87,6 @@ class ReceivingWood(models.Model):
             picking = stock_picking_obj.create(picking_vals)
 
             for move_line in valid_moves:
-                print(move_line.product_id.name)
                 move_vals = {
                     'picking_id': picking.id,
                     'product_id': move_line.product_id.id,
@@ -106,11 +104,11 @@ class ReceivingWood(models.Model):
 
             return {
                 'type': 'ir.actions.act_window',
-                'name': 'Надходження',  # Имя окна
+                'name': 'Надходження',
                 'res_model': 'stock.picking',
                 'view_mode': 'form',
-                'res_id': picking.id,  # Открываем созданную запись
-                'target': 'current',  # Открывать в текущем окне
+                'res_id': picking.id,
+                'target': 'current',
             }
 
         return True
