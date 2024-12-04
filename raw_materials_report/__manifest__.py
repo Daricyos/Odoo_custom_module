@@ -15,6 +15,7 @@
         'wizards/raw_materials_report_wizard_views.xml',
         'reports/raw_materials_report.xml',
 
+        'views/aggregated_foreman_report.xml',
         'views/stock_menu.xml',
 
     ],
