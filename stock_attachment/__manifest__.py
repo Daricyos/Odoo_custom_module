@@ -17,9 +17,13 @@ Stock Picking Attachments
     """,
     'author': 'GabSoft',
     'website': 'https://yourwebsite.com',
-    'depends': ['stock'],
+    'depends': [
+        'base',
+        'stock'
+    ],
     'data': [
         'security/ir.model.access.csv',
+        'security/security.xml',
 
         'views/receiving_wood.xml',
         'views/stock_picking_views.xml',
