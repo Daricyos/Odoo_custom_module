@@ -290,14 +290,16 @@
                     </div>
 
                     <!-- Section 4 -->
-                    <div class="o_section o_section_margin_top">
+                    <div class="o_section">
                         <h4 class="o_section_label">4. Прихід буку, фактична приймка:</h4>
                     </div>
 
                     <table class="o_table_general">
                         <thead>
                             <tr>
-                                <th colspan="10">В тому числі по сортам:</th>
+                                <th colspan="8">В тому числі по сортам:</th>
+                                <th></th>
+                                <th></th>
                                 <th></th>
                             </tr>
                             <tr>
@@ -343,6 +345,72 @@
                             </tr>
                         </tbody>
                     </table>
+
+                    <!-- Section 5 -->
+                    <div class="o_section">
+                        <h4 class="o_section_label">5. Розхід буку на лущення, подача чураків в цех:</h4>
+                    </div>
+
+                    <table class="o_table_general">
+                        <thead>
+                            <tr>
+                                <th colspan="8">В тому числі по сортам:</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                            <tr>
+                                <th>A</th>
+                                <th>%</th>
+                                <th>B</th>
+                                <th>%</th>
+                                <th>C</th>
+                                <th>%</th>
+                                <th>D</th>
+                                <th>%</th>
+                                <th>Всього</th>
+                                <th>% виходу</th>
+                                <th>День / Пилов чурак</th>
+                                <th>М-ць / Пилов чурак</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="text" value="" /></td>
+                                <td><input type="text" value="#ДЕЛ/0!" /></td>
+                                <td><input type="text" value="" /></td>
+                                <td><input type="text" value="######" /></td>
+                                <td><input type="text" value="" /></td>
+                                <td><input type="text" value="#ДЕЛ/0!" /></td>
+                                <td><input type="text" value="" /></td>
+                                <td><input type="text" value="#ДЕЛ/0!" /></td>
+                                <td><input type="text" value="0,000" /></td>
+                                <td><input type="text" value="" /></td>
+                                <td><input type="text" placeholder="День" /></td>
+                                <td><input type="text" placeholder="Місяць" /></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" value="15,340" /></td>
+                                <td><input type="text" value="8,52%" /></td>
+                                <td><input type="text" value="73,191" /></td>
+                                <td><input type="text" value="40,64%" /></td>
+                                <td><input type="text" value="91,553" /></td>
+                                <td><input type="text" value="89,59%" /></td>
+                                <td><input type="text" value="5,000" /></td>
+                                <td><input type="text" value="5,00%" /></td>
+                                <td><input type="text" value="184,084" /></td>
+                                <td><input type="text" value="98,76%" /></td>
+                                <td><input type="text" value="12,000" /></td>
+                                <td><input type="text" value="320,000" /></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+
+
+
 
                 </div>
             </div>
