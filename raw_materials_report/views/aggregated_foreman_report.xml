@@ -288,6 +288,62 @@
                             </table>
                         </div>
                     </div>
+
+                    <!-- Section 4 -->
+                    <div class="o_section o_section_margin_top">
+                        <h4 class="o_section_label">4. Прихід буку, фактична приймка:</h4>
+                    </div>
+
+                    <table class="o_table_general">
+                        <thead>
+                            <tr>
+                                <th colspan="10">В тому числі по сортам:</th>
+                                <th></th>
+                            </tr>
+                            <tr>
+                                <th>A</th>
+                                <th>%</th>
+                                <th>B</th>
+                                <th>%</th>
+                                <th>C</th>
+                                <th>%</th>
+                                <th>D</th>
+                                <th>%</th>
+                                <th>Всього</th>
+                                <th>За день</th>
+                                <th>За місяць</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="text" value="" /></td>
+                                <td><input type="text" value="#ДЕЛ/0!" /></td>
+                                <td><input type="text" value="" /></td>
+                                <td><input type="text" value="######" /></td>
+                                <td><input type="text" value="" /></td>
+                                <td><input type="text" value="#ДЕЛ/0!" /></td>
+                                <td><input type="text" value="" /></td>
+                                <td><input type="text" value="#ДЕЛ/0!" /></td>
+                                <td><input type="text" value="0,000" /></td>
+                                <td><input type="text" value="" /></td>
+                                <td><input type="text" value="" /></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" value="12,340" /></td>
+                                <td><input type="text" value="7,52%" /></td>
+                                <td><input type="text" value="65,191" /></td>
+                                <td><input type="text" value="35,64%" /></td>
+                                <td><input type="text" value="81,553" /></td>
+                                <td><input type="text" value="75,59%" /></td>
+                                <td><input type="text" value="5,000" /></td>
+                                <td><input type="text" value="5,00%" /></td>
+                                <td><input type="text" value="164,084" /></td>
+                                <td><input type="text" value="" /></td>
+                                <td><input type="text" value="" /></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
                 </div>
             </div>
         </t>
