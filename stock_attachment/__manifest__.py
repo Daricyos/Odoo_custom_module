@@ -23,7 +23,7 @@ Stock Picking Attachments
     ],
     'data': [
         'security/ir.model.access.csv',
-        'security/security.xml',
+        # 'security/security.xml',
 
         'views/receiving_wood.xml',
         'views/stock_picking_views.xml',
