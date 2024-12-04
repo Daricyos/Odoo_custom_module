@@ -407,6 +407,75 @@
                         </tbody>
                     </table>
 
+                    <!-- Section 6 -->
+                    <div class="o_section">
+                        <h4 class="o_section_label">6. Фактичний залишок буку по сортам</h4>
+                    </div>
+
+                    <table class="o_table_general">
+                        <thead>
+                            <tr>
+                                <th colspan="8">Розподіл по сортам</th>
+                            </tr>
+                            <tr>
+                                <th>A</th>
+                                <th>%</th>
+                                <th>B</th>
+                                <th>%</th>
+                                <th>C</th>
+                                <th>%</th>
+                                <th>D</th>
+                                <th>%</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="text" value="12,000" /></td>
+                                <td><input type="text" value="20%" /></td>
+                                <td><input type="text" value="18,000" /></td>
+                                <td><input type="text" value="30%" /></td>
+                                <td><input type="text" value="15,000" /></td>
+                                <td><input type="text" value="25%" /></td>
+                                <td><input type="text" value="15,000" /></td>
+                                <td><input type="text" value="25%" /></td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" class="o_table_title_footer">Всього:</td>
+                                <td colspan="2"><input type="text" value="60,000" /></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- Таблица с остатками по камерам -->
+                    <table class="o_table_general">
+                        <thead>
+                            <tr>
+                                <th colspan="6">Залишок в камерах:</th>
+                            </tr>
+                            <tr>
+                                <th>№6</th>
+                                <th>№7</th>
+                                <th>№8</th>
+                                <th>№1</th>
+                                <th>Всього в камерах</th>
+                                <th>Площ.</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="text" value="5,000" /></td>
+                                <td><input type="text" value="8,000" /></td>
+                                <td><input type="text" value="6,000" /></td>
+                                <td><input type="text" value="7,000" /></td>
+                                <td><input type="text" value="26,000" /></td>
+                                <td><input type="text" value="34,000" /></td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" class="o_table_title_footer">Всього (загальний підсумок):</td>
+                                <td><input type="text" value="60,000" /></td>
+                            </tr>
+                        </tbody>
+                    </table>
 
 
 
