@@ -29,7 +29,7 @@
                     </group>
                     <group>
                         <field name="invoice_number"/>
-                        <field name="responsible"/>
+                        <field name="responsible" readonly="1"/>
                     </group>
                     <group string="Завантаження документів">
                         <group>
@@ -134,7 +134,7 @@
                     </group>
                     <group>
                         <field name="invoice_number"/>
-                        <field name="responsible"/>
+                        <field name="responsible" readonly="1"/>
                     </group>
                     <group string="Завантаження документів">
                         <group>
@@ -243,12 +243,12 @@
                     </header>
                     <group>
                         <group>
-                            <field name="partner_id"/>
-                            <field name="warehouse_to_id"/>
+                            <field name="partner_id" readonly="1"/>
+                            <field name="warehouse_to_id" readonly="1"/>
                         </group>
                         <group>
                             <field name="name"/>
-                            <field name="responsible"/>
+                            <field name="responsible" readonly="1"/>
                         </group>
                         <group string="Завантаження документів">
                             <group>
@@ -353,7 +353,7 @@
                         </group>
                         <group>
                             <field name="invoice_number"/>
-                            <field name="responsible"/>
+                            <field name="responsible" readonly="1"/>
                         </group>
                         <group string="Завантаження документів">
                             <group>
@@ -458,7 +458,7 @@
                     </group>
                     <group>
                         <field name="invoice_number"/>
-                        <field name="responsible"/>
+                        <field name="responsible" readonly="1"/>
                     </group>
                     <group string="Завантаження документів">
                         <group>

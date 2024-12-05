@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <record id="action_open_raw_materials_wizard" model="ir.actions.act_window">
-        <field name="name">Звіт про сировину</field>
+        <field name="name">Звіт прийому сировини</field>
         <field name="res_model">raw.materials.report.wizard</field>
         <field name="view_mode">form</field>
         <field name="target">new</field>
@@ -28,17 +28,17 @@ result = action</field>
 
     <menuitem
         id="menu_raw_materials_wizard"
-        name="Створити звіт про сировину"
+        name="Створити звіт прийому сировини"
         action="action_open_raw_materials_wizard"
         parent="stock.menu_warehouse_report"
         sequence="110"/>
 
-    <menuitem
-        id="menu_raw_materials_report"
-        name="Звіт за місяць друк"
-        action="action_raw_materials_report"
-        parent="stock.menu_warehouse_report"
-        sequence="100"/>
+<!--    <menuitem-->
+<!--        id="menu_raw_materials_report"-->
+<!--        name="Звіт за місяць друк"-->
+<!--        action="action_raw_materials_report"-->
+<!--        parent="stock.menu_warehouse_report"-->
+<!--        sequence="100"/>-->
 
     <menuitem 
         id="menu_daily_material_report" 

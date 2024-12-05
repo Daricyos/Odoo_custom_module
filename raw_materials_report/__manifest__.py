@@ -12,7 +12,7 @@
         'data/paperformat.xml',
         'security/ir.model.access.csv',
 
-        'wizards/raw_materials_report_wizard_views.xml',
+        'views/raw_materials_report_wizard_views.xml',
         'reports/raw_materials_report.xml',
 
         'views/aggregated_foreman_report.xml',
