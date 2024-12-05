@@ -9,17 +9,18 @@
         <field name="category_id" ref="stock_attachment.stock_attachment_category_management"/>
     </record>
 
-    <record id="group_director" model="res.groups">
-        <field name="name">Директор</field>
-        <field name="category_id" ref="stock_attachment.stock_attachment_category_management"/>
-        <field name="implied_ids" eval="[(4, ref('group_wood_receiver'))]"/>
-        <field name="implied_ids" eval="[(4, ref('group_head_production'))]"/>
-    </record>
 
     <record id="group_head_production" model="res.groups">
         <field name="name">Начальник виробництва</field>
         <field name="category_id" ref="stock_attachment.stock_attachment_category_management"/>
         <field name="implied_ids" eval="[(4, ref('group_wood_receiver'))]"/>
+    </record>
+
+    <record id="group_director" model="res.groups">
+        <field name="name">Директор</field>
+        <field name="category_id" ref="stock_attachment.stock_attachment_category_management"/>
+        <field name="implied_ids" eval="[(4, ref('group_wood_receiver'))]"/>
+        <field name="implied_ids" eval="[(4, ref('group_head_production'))]"/>
     </record>
 
     <record id="group_general_director" model="res.groups">
