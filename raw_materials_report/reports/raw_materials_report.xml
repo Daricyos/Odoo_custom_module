@@ -4,8 +4,10 @@
         <t t-call="web.html_container">
             <t t-call="web.external_layout">
                 <div class="page">
-                    <h2>Прихід буку від посточальників за
-                        <t t-esc="datetime.datetime.now().strftime('%B %Y')"/>
+                    <h2>Прихід буку від посточальників з
+                        <t t-esc="data[2]"/>
+                        по
+                        <t t-esc="data[3]"/>
                     </h2>
                     <table class="table table-bordered">
                         <thead>
@@ -20,7 +22,7 @@
                                 <th colspan="2">Сорт 'C'</th>
                                 <th colspan="2">Сорт 'D'</th>
                                 <th>Всього</th>
-<!--                                <th rowspan="3">Референс</th>-->
+                                <!--                                <th rowspan="3">Референс</th>-->
                                 <th rowspan="3">Акт №</th>
                             </tr>
                             <tr>
@@ -28,11 +30,11 @@
                                 <th rowspan="2">Водій</th>
                                 <th rowspan="2">Накл</th>
                                 <th>Об'єм</th>
-                                 <th>Об'єм</th>
+                                <th>Об'єм</th>
                                 <th rowspan="2">%</th>
-                                 <th>Об'єм</th>
+                                <th>Об'єм</th>
                                 <th rowspan="2">%</th>
-                                 <th>Об'єм</th>
+                                <th>Об'єм</th>
                                 <th rowspan="2">%</th>
                                 <th>Об'єм</th>
                                 <th rowspan="2">%</th>
@@ -66,7 +68,7 @@
                                         <t t-esc="line['partner']"/>
                                     </td>
                                     <td>
-                                        <p>-</p>
+                                        <t t-esc="line['origin']"/>
                                     </td>
                                     <td>
                                         <t t-esc="line['quantity']"/>
@@ -74,10 +76,10 @@
                                     <td>
                                         <p>-</p>
                                     </td>
-                                     <td>
+                                    <td>
                                         <p>-</p>
                                     </td>
-                                     <td>
+                                    <td>
                                         <p>-</p>
                                     </td>
                                     <td>
@@ -86,19 +88,19 @@
                                     <td>
                                         <p>%</p>
                                     </td>
-                                     <td>
+                                    <td>
                                         <t t-esc="line['pichB']"/>
                                     </td>
                                     <td>
                                         <p>%</p>
                                     </td>
-                                     <td>
+                                    <td>
                                         <t t-esc="line['pichC']"/>
                                     </td>
                                     <td>
                                         <p>%</p>
                                     </td>
-                                     <td>
+                                    <td>
                                         <t t-esc="line['pichD']"/>
                                     </td>
                                     <td>
@@ -107,13 +109,17 @@
                                     <td>
                                         <t t-esc="line['quantity']"/>
                                     </td>
-<!--                                    <td>-->
-<!--                                        <t t-esc="line['reference']"/>-->
-<!--                                    </td>-->
-                                     <td>
+                                    <!--                                    <td>-->
+                                    <!--                                        <t t-esc="line['reference']"/>-->
+                                    <!--                                    </td>-->
+                                    <td>
                                         <t t-esc="line_index + 1"/>
                                     </td>
                                 </tr>
+                            </t>
+                            <t>
+                                <th colspan="19">
+                                </th>
                             </t>
                             <t>
                                 <tr>
@@ -133,15 +139,15 @@
                                         <p>-</p>
                                     </td>
                                     <td>
-                                        <t  t-esc="data[1]['total_overall_quantity']"/>
+                                        <t t-esc="data[1]['total_overall_quantity']"/>
                                     </td>
                                     <td>
                                         <p>-</p>
                                     </td>
-                                     <td>
+                                    <td>
                                         <p>-</p>
                                     </td>
-                                     <td>
+                                    <td>
                                         <p>-</p>
                                     </td>
                                     <td>
@@ -150,19 +156,19 @@
                                     <td>
                                         <p>%</p>
                                     </td>
-                                     <td>
+                                    <td>
                                         <t t-esc="data[1]['total_quantities']['pichB']"/>
                                     </td>
                                     <td>
                                         <p>%</p>
                                     </td>
-                                     <td>
+                                    <td>
                                         <t t-esc="data[1]['total_quantities']['pichC']"/>
                                     </td>
                                     <td>
                                         <p>%</p>
                                     </td>
-                                     <td>
+                                    <td>
                                         <t t-esc="data[1]['total_quantities']['pichD']"/>
                                     </td>
                                     <td>
@@ -171,8 +177,41 @@
                                     <td>
                                         <t t-esc="data[1]['total_overall_quantity']"/>
                                     </td>
-                                     <td>
+                                    <td>
                                         <p>-</p>
+                                    </td>
+                                </tr>
+                            </t>
+                            <t>
+                                <td colspan="19">
+                                </td>
+                            </t>
+                            <t t-foreach="data[4]" t-as="line">
+                                <tr>
+                                    <td colspan="2">
+
+                                    </td>
+                                    <td colspan="7">
+                                        <p>Ціна 1м3 бука із
+                                            <t t-esc="line"/>
+                                            : ???,?? грн.
+                                        </p>
+                                    </td>
+                                    <td colspan="10">
+
+                                    </td>
+                                </tr>
+                            </t>
+                            <t>
+                                <td colspan="19">
+                                </td>
+                            </t>
+                            <t>
+                                <tr>
+                                    <td colspan="2">
+                                    </td>
+                                    <td colspan="17">
+                                        <p>Загальна ціна 1м3: ???,?? грн.</p>
                                     </td>
                                 </tr>
                             </t>
@@ -185,7 +224,7 @@
 
     <record id="raw_materials_report_action" model="ir.actions.report">
         <field name="paperformat_id" ref="paperformat_a4_landscape"/>
-        <field name="name">Звіт про прийом сировини за місяць</field>
+        <field name="name">Звіт про прийом сировини</field>
         <field name="model">raw.materials.report.wizard</field>
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">raw_materials_report.report_template</field>
