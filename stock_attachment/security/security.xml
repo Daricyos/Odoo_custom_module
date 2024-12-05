@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <record id="stock_attachment_category_management" model="ir.module.category">
-        <field name="name">Группы для управления процессами</field>
+        <field name="name">Групи для управління процесами</field>
     </record>
 
     <record id="group_wood_receiver" model="res.groups">
