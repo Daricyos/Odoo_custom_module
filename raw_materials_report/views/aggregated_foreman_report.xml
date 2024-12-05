@@ -320,13 +320,13 @@
                         <tbody>
                             <tr>
                                 <td><input type="text" value="" /></td>
-                                <td><input type="text" value="#ДЕЛ/0!" /></td>
                                 <td><input type="text" value="" /></td>
-                                <td><input type="text" value="######" /></td>
                                 <td><input type="text" value="" /></td>
-                                <td><input type="text" value="#ДЕЛ/0!" /></td>
                                 <td><input type="text" value="" /></td>
-                                <td><input type="text" value="#ДЕЛ/0!" /></td>
+                                <td><input type="text" value="" /></td>
+                                <td><input type="text" value="" /></td>
+                                <td><input type="text" value="" /></td>
+                                <td><input type="text" value="" /></td>
                                 <td><input type="text" value="0,000" /></td>
                                 <td><input type="text" value="" /></td>
                                 <td><input type="text" value="" /></td>
@@ -379,13 +379,13 @@
                         <tbody>
                             <tr>
                                 <td><input type="text" value="" /></td>
-                                <td><input type="text" value="#ДЕЛ/0!" /></td>
                                 <td><input type="text" value="" /></td>
-                                <td><input type="text" value="######" /></td>
                                 <td><input type="text" value="" /></td>
-                                <td><input type="text" value="#ДЕЛ/0!" /></td>
                                 <td><input type="text" value="" /></td>
-                                <td><input type="text" value="#ДЕЛ/0!" /></td>
+                                <td><input type="text" value="" /></td>
+                                <td><input type="text" value="" /></td>
+                                <td><input type="text" value="" /></td>
+                                <td><input type="text" value="" /></td>
                                 <td><input type="text" value="0,000" /></td>
                                 <td><input type="text" value="" /></td>
                                 <td><input type="text" placeholder="День" /></td>
