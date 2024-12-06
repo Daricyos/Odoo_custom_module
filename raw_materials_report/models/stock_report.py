@@ -124,6 +124,13 @@ class RawMaterialsReport(models.AbstractModel):
                 },
                 'total_overall_quantity': total_overall_quantity or 0
             }
+            # Перевіряємо та присвоюємо 0, якщо значення відсутнє або None
+            for key in ['pichA', 'pichB', 'pichC', 'pichD']:
+                summary['total_quantities'][key] = summary['total_quantities'].get(key, 0)
+            # summary['total_quantities']['pichA'] = summary['total_quantities'].get('pichA', 0)
+            # summary['total_quantities']['pichB'] = summary['total_quantities'].get('pichB', 0)
+            # summary['total_quantities']['pichC'] = summary['total_quantities'].get('pichC', 0)
+            # summary['total_quantities']['pichD'] = summary['total_quantities'].get('pichD', 0)
 
             return processed_report_data, summary
 
