@@ -3,11 +3,29 @@
     <template id="report_template">
         <t t-call="web.html_container">
             <t t-call="web.external_layout">
+                <style>
+                    .table-bordered {
+                    border: 2px solid black; /* Задає товстий бордер */
+                    }
+                    .table-bordered th, .table-bordered td {
+                    border: 2px solid black; /* Бордер для комірок */
+                    text-align: center; /* Текст вирівнюється по центру */
+                    vertical-align: middle;
+                    }
+                    .table th {
+                    background-color: #f2f2f2; /* Додатково - світло-сірий фон для заголовків */
+                    font-weight: bold;
+                    }
+                    .table {
+                    width: 100%; /* Робить таблицю шириною на всю сторінку */
+                    border-collapse: collapse; /* Забирає подвійні межі між клітинками */
+                    }
+                </style>
                 <div class="page">
                     <h2>Прихід буку від посточальників з
-                        <t t-esc="data[2]"/>
+                        <t t-esc="start_date"/>
                         по
-                        <t t-esc="data[3]"/>
+                        <t t-esc="end_date"/>
                     </h2>
                     <table class="table table-bordered">
                         <thead>
@@ -118,13 +136,15 @@
                                 </tr>
                             </t>
                             <t>
-                                <th colspan="19">
-                                </th>
+                                <tr>
+                                    <td colspan="19">
+                                    </td>
+                                </tr>
                             </t>
                             <t>
                                 <tr>
-                                    <td>
-                                        <p>-</p>
+                                    <td colspan="3">
+
                                     </td>
                                     <td>
                                         <p>Всього:</p>
@@ -133,22 +153,9 @@
                                         <p>-</p>
                                     </td>
                                     <td>
-                                        <p>-</p>
-                                    </td>
-                                    <td>
-                                        <p>-</p>
-                                    </td>
-                                    <td>
                                         <t t-esc="data[1]['total_overall_quantity']"/>
                                     </td>
-                                    <td>
-                                        <p>-</p>
-                                    </td>
-                                    <td>
-                                        <p>-</p>
-                                    </td>
-                                    <td>
-                                        <p>-</p>
+                                    <td colspan="3">
                                     </td>
                                     <td>
                                         <t t-esc="data[1]['total_quantities']['pichA']"/>
@@ -174,44 +181,63 @@
                                     <td>
                                         <p>%</p>
                                     </td>
-                                    <td>
+                                    <td colspan="2">
                                         <t t-esc="data[1]['total_overall_quantity']"/>
-                                    </td>
-                                    <td>
-                                        <p>-</p>
                                     </td>
                                 </tr>
                             </t>
                             <t>
-                                <td colspan="19">
-                                </td>
+                                <tr>
+                                    <td colspan="19">
+                                    </td>
+                                </tr>
                             </t>
-                            <t t-foreach="data[4]" t-as="line">
+                            <t t-foreach="data[2]" t-as="line">
                                 <tr>
                                     <td colspan="2">
-
                                     </td>
-                                    <td colspan="7">
+                                    <td style="text-align: start;" colspan="7">
                                         <p>Ціна 1м3 бука із
                                             <t t-esc="line"/>
-                                            : ???,?? грн.
+                                            : ???,?? гр.
                                         </p>
                                     </td>
                                     <td colspan="10">
-
                                     </td>
                                 </tr>
                             </t>
                             <t>
-                                <td colspan="19">
-                                </td>
+                                <tr>
+                                    <td colspan="9">
+                                    </td>
+                                    <td style="text-align: start;" colspan="10">
+                                        <p>Сума з ПДВ: ???,?? гр</p>
+                                    </td>
+                                </tr>
+                            </t>
+                            <t>
+                                <tr>
+                                    <td colspan="19">
+                                    </td>
+                                </tr>
+                            </t>
+                            <t t-foreach="data[3]" t-as="line">
+                                <tr>
+                                    <td colspan="9">
+                                    </td>
+                                    <td style="text-align: start;" colspan="10">
+                                        <p>Приймальник лісу _____________
+                                            <t t-esc="line"/>
+                                        </p>
+                                    </td>
+                                </tr>
                             </t>
                             <t>
                                 <tr>
                                     <td colspan="2">
                                     </td>
-                                    <td colspan="17">
-                                        <p>Загальна ціна 1м3: ???,?? грн.</p>
+                                    <td style="text-align: start;" colspan="17">
+                                        <p>Загальна ціна 1м3: ???,?? гр.</p>
                                     </td>
                                 </tr>
                             </t>
@@ -222,11 +248,22 @@
         </t>
     </template>
 
-    <record id="raw_materials_report_action" model="ir.actions.report">
+    <record id="raw_materials_report_action_pdf" model="ir.actions.report">
         <field name="paperformat_id" ref="paperformat_a4_landscape"/>
         <field name="name">Звіт про прийом сировини</field>
         <field name="model">raw.materials.report.wizard</field>
         <field name="report_type">qweb-pdf</field>
+        <field name="report_name">raw_materials_report.report_template</field>
+        <field name="report_file">raw_materials_report.report_template</field>
+        <field name="binding_model_id" ref="model_raw_materials_report_wizard"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="raw_materials_report_action_html" model="ir.actions.report">
+        <field name="paperformat_id" ref="paperformat_a4_landscape"/>
+        <field name="name">Звіт про прийом сировини</field>
+        <field name="model">raw.materials.report.wizard</field>
+        <field name="report_type">qweb-html</field>
         <field name="report_name">raw_materials_report.report_template</field>
         <field name="report_file">raw_materials_report.report_template</field>
         <field name="binding_model_id" ref="model_raw_materials_report_wizard"/>

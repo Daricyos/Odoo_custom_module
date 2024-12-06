@@ -11,22 +11,12 @@
                         <field name="end_date" required="1"/>
                     </group>
                 </group>
-<!--                <div style="width: 100%;">My Table</div>-->
-<!--                <field name="data[0]" as="line">-->
-<!--                    <tree string="Деталі звіту" editable="bottom">-->
-<!--                        <field name="date"/>-->
-<!--                        <field name="line[0][comp]" string="Постачальник"/>-->
-<!--                        <field name="partner" string="Водій"/>-->
-<!--                        <field name="quantity" string="Об'єм (м3)"/>-->
-<!--                        <field name="pichA" string="Сорт A"/>-->
-<!--                        <field name="pichB" string="Сорт B"/>-->
-<!--                        <field name="pichC" string="Сорт C"/>-->
-<!--                        <field name="pichD" string="Сорт D"/>-->
-<!--                    </tree>-->
-<!--                </field>-->
-
                 <footer>
-                    <button name="action_gen_report"
+                    <button name="action_gen_report_html"
+                            string="На екран"
+                            type="object"
+                            class="btn-primary"/>
+                    <button name="action_gen_report_pdf"
                             string="Друкувати"
                             type="object"
                             class="btn-primary"/>
@@ -40,76 +30,3 @@
 </odoo>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--<?xml version="1.0" encoding="utf-8"?>-->
-<!--<odoo>-->
-<!--    <record id="view_raw_materials_report_wizard_form" model="ir.ui.view">-->
-<!--        <field name="name">raw.materials.report.wizard.form</field>-->
-<!--        <field name="model">raw.materials.report.wizard</field>-->
-<!--        <field name="arch" type="xml">-->
-<!--            <form string="Звіт про сировину">-->
-
-<!--                <group>-->
-<!--                    <group>-->
-<!--                        <field name="date_from" required="1"/>-->
-<!--                        <field name="date_to" required="1"/>-->
-<!--                    </group>-->
-<!--                    <group>-->
-<!--                        <field name="data[0]">-->
-<!--                            <tree string="Деталі звіту" editable="bottom">-->
-<!--                                <field name="sequence"/>-->
-<!--                                <field name="date"/>-->
-<!--                                <field name="comp"/>-->
-<!--                                <field name="partner"/>-->
-<!--                                <field name="quantity"/>-->
-<!--                                <field name="pichA"/>-->
-<!--                                <field name="pichB"/>-->
-<!--                                <field name="pichC"/>-->
-<!--                                <field name="pichD"/>-->
-<!--                            </tree>-->
-<!--                        </field>-->
-<!--                    </group>-->
-
-<!--                </group>-->
-<!--                <footer>-->
-<!--                    <button name="action_gen_report"-->
-<!--                            string="Друкувати"-->
-<!--                            type="object"-->
-<!--                            class="btn-primary"/>-->
-<!--                    <button special="cancel"-->
-<!--                            string="Скасувати"-->
-<!--                            class="btn-secondary"/>-->
-<!--                </footer>-->
-<!--            </form>-->
-<!--        </field>-->
-<!--    </record>-->
-<!--</odoo>-->

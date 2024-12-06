@@ -33,13 +33,6 @@ result = action</field>
         parent="stock.menu_warehouse_report"
         sequence="110"/>
 
-<!--    <menuitem-->
-<!--        id="menu_raw_materials_report"-->
-<!--        name="Звіт за місяць друк"-->
-<!--        action="action_raw_materials_report"-->
-<!--        parent="stock.menu_warehouse_report"-->
-<!--        sequence="100"/>-->
-
     <menuitem 
         id="menu_daily_material_report" 
         name="Агрегована форма бригадира" 
