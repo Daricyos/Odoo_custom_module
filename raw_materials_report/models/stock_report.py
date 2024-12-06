@@ -107,6 +107,15 @@ class RawMaterialsReport(models.AbstractModel):
                     'origin': group[0]['origin'] or 'N/A',  # Додаємо поле початкового документа
                     'quantity': sum(product_quantities.values())
                 }
+                # Додаємо відсоткове співвідношення
+                total_quantity = processed_item['quantity'] or 1  # Уникаємо ділення на 0
+
+                processed_item.update({
+                    'pichA%': round((processed_item['pichA'] / total_quantity) * 100, 2),
+                    'pichB%': round((processed_item['pichB'] / total_quantity) * 100, 2),
+                    'pichC%': round((processed_item['pichC'] / total_quantity) * 100, 2),
+                    'pichD%': round((processed_item['pichD'] / total_quantity) * 100, 2),
+                })
                 # Перевіряємо, чи всі значення pichA, pichB, pichC, pichD дорівнюють 0
                 if not (processed_item['pichA'] == 0 and
                         processed_item['pichB'] == 0 and
@@ -122,15 +131,22 @@ class RawMaterialsReport(models.AbstractModel):
                     'pichC': 0,
                     'pichD': 0,
                 },
-                'total_overall_quantity': total_overall_quantity or 0
+                'total_overall_quantity': round(total_overall_quantity or 0, 3) or 0
             }
+
             # Перевіряємо та присвоюємо 0, якщо значення відсутнє або None
             for key in ['pichA', 'pichB', 'pichC', 'pichD']:
                 summary['total_quantities'][key] = summary['total_quantities'].get(key, 0)
-            # summary['total_quantities']['pichA'] = summary['total_quantities'].get('pichA', 0)
-            # summary['total_quantities']['pichB'] = summary['total_quantities'].get('pichB', 0)
-            # summary['total_quantities']['pichC'] = summary['total_quantities'].get('pichC', 0)
-            # summary['total_quantities']['pichD'] = summary['total_quantities'].get('pichD', 0)
+
+            # Додаємо відсоткове співвідношення
+            total_quantity = summary['total_overall_quantity'] or 1  # Уникаємо ділення на 0
+
+            summary['total_percentages'] = {
+                'pichA%': round((summary['total_quantities'].get('pichA', 0) / total_quantity) * 100, 2),
+                'pichB%': round((summary['total_quantities'].get('pichB', 0) / total_quantity) * 100, 2),
+                'pichC%': round((summary['total_quantities'].get('pichC', 0) / total_quantity) * 100, 2),
+                'pichD%': round((summary['total_quantities'].get('pichD', 0) / total_quantity) * 100, 2),
+            }
 
             return processed_report_data, summary
 
