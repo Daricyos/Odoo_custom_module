@@ -104,25 +104,25 @@
                                         <t t-esc="line['pichA']"/>
                                     </td>
                                     <td>
-                                        <p>%</p>
+                                        <t t-esc="line['pichA%']"/>
                                     </td>
                                     <td>
                                         <t t-esc="line['pichB']"/>
                                     </td>
                                     <td>
-                                        <p>%</p>
+                                         <t t-esc="line['pichB%']"/>
                                     </td>
                                     <td>
                                         <t t-esc="line['pichC']"/>
                                     </td>
                                     <td>
-                                        <p>%</p>
+                                        <t t-esc="line['pichC%']"/>
                                     </td>
                                     <td>
                                         <t t-esc="line['pichD']"/>
                                     </td>
                                     <td>
-                                        <p>%</p>
+                                        <t t-esc="line['pichD%']"/>
                                     </td>
                                     <td>
                                         <t t-esc="line['quantity']"/>
@@ -161,28 +161,30 @@
                                         <t t-esc="data[1]['total_quantities']['pichA']"/>
                                     </td>
                                     <td>
-                                        <p>%</p>
+                                        <t t-esc="data[1]['total_percentages']['pichA%']"/>
                                     </td>
                                     <td>
                                         <t t-esc="data[1]['total_quantities']['pichB']"/>
                                     </td>
                                     <td>
-                                        <p>%</p>
+                                        <t t-esc="data[1]['total_percentages']['pichB%']"/>
                                     </td>
                                     <td>
                                         <t t-esc="data[1]['total_quantities']['pichC']"/>
                                     </td>
                                     <td>
-                                        <p>%</p>
+                                       <t t-esc="data[1]['total_percentages']['pichC%']"/>
                                     </td>
                                     <td>
                                         <t t-esc="data[1]['total_quantities']['pichD']"/>
                                     </td>
                                     <td>
-                                        <p>%</p>
+                                        <t t-esc="data[1]['total_percentages']['pichD%']"/>
                                     </td>
-                                    <td colspan="2">
+                                    <td>
                                         <t t-esc="data[1]['total_overall_quantity']"/>
+                                    </td>
+                                    <td>
                                     </td>
                                 </tr>
                             </t>
