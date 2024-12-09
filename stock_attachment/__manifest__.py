@@ -39,6 +39,7 @@ Stock Picking Attachments
 
     'assets': {
         'web.assets_backend': [
+            'stock_attachment/static/src/js/beech_aggregate_dashboard.js'
             # 'stock_attachment/static/src/js/kanban_button.js',
             # 'stock_attachment/static/src/xml/inventory_kanban_button.xml'
             'stock_attachment/static/src/**/*',

@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <record id="beech_aggregate_dashboard_actions" model="ir.actions.client">
+        <field name="name">Дашборд по буку агрегований</field>
+        <field name="tag">beech_aggregate_dashboard_tag</field>
+    </record>
+
+    <menuitem id="beech_aggregate_dashboard"
+              name="Дашборд по буку агрегований"
+              parent="stock.menu_stock_root"
+              action="beech_aggregate_dashboard_actions"
+              sequence="120"/>
+
     <!-- Додавання нового пункту меню в розділ складу -->
     <menuitem
             id="menu_operations_main"
