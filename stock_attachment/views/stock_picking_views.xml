@@ -76,4 +76,16 @@
             </xpath>
         </field>
     </record>
+
+<!--    <data>-->
+<!--        <record id="stock.menu_stock_warehouse_mgmt" model="ir.ui.menu">-->
+<!--            <field name="name">Operations</field>-->
+<!--            <field name="groups_id" eval="[(4, ref('group_director'))]"/>-->
+<!--        </record>-->
+
+<!--        <record id="stock.menu_stock_inventory_control" model="ir.ui.menu">-->
+<!--            <field name="name">Products</field>-->
+<!--            <field name="groups_id" eval="[(4, ref('group_director'))]"/>-->
+<!--        </record>-->
+<!--    </data>-->
 </odoo>
