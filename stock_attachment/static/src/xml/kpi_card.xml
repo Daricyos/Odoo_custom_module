@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+    <t t-name="stock_attachment.KpiCard" owl="1">
+        <div class="col-12">
+            <!-- Add border-radius for rounded corners -->
+            <div class="shadow-sm border my-2 py-2 px-3 bg-white d-flex flex-column align-items-center"
+                 style="border-radius: 15px;"> <!-- Adjust the value as needed -->
+                <div class="h6 text-muted text-center mb-2">
+                    <span t-esc="props.name"/>
+                </div>
+                <div class="d-flex w-100 justify-content-between align-items-start">
+                    <div>
+                        <div class="h4 fw-bold text-dark" style="font-size: 30px">
+                            <span t-esc="props.value"/> м³
+                        </div>
+                        <div class="h6">
+                            <span t-attf-class="text-muted">
+                                <span t-esc="props.percentage"/>
+                                <t t-if="props.unit"><span> <t t-esc="props.unit"/></span></t>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>
