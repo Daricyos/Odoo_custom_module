@@ -19,7 +19,9 @@ Stock Picking Attachments
     'website': 'https://yourwebsite.com',
     'depends': [
         'base',
-        'stock'
+        'stock',
+        'sale',
+        'board'
     ],
     'data': [
         'security/ir.model.access.csv',
@@ -39,10 +41,16 @@ Stock Picking Attachments
 
     'assets': {
         'web.assets_backend': [
-            'stock_attachment/static/src/js/beech_aggregate_dashboard.js'
+            'stock_attachment/static/src/js/kpi_card.js',
+            'stock_attachment/static/src/js/camera.js',
+            'stock_attachment/static/src/js/beech_aggregate_dashboard.js',
+            'stock_attachment/static/src/xml/dashboard.xml',
+            'stock_attachment/static/src/xml/kpi_card.xml',
+            'stock_attachment/static/src/xml/camera.xml',
+            'stock_attachment/static/src/css/styles.css'
             # 'stock_attachment/static/src/js/kanban_button.js',
             # 'stock_attachment/static/src/xml/inventory_kanban_button.xml'
-            'stock_attachment/static/src/**/*',
+            # 'stock_attachment/static/src/**/*',
         ],
     },
 

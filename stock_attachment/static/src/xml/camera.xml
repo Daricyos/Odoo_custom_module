@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="stock_attachment.Camera" owl="1">
+        <div class="card-container">
+            <div class="card-header">
+                <span class="camera-name"><t t-esc="props.name" /></span>
+            </div>
+            <div class="card-body">
+                <span class="volume"><t t-esc="props.volume" /></span>
+                <span class="loading-status"><t t-esc="props.loadingStatus" /></span>
+            </div>
+        </div>
+    </t>
+</templates>

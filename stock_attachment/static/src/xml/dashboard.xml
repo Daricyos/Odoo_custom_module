@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="stock_attachment.CrmDashboard">
+        <div class="container-dashboard">
+            <div class="row">
+                <t t-foreach="state.kpiData" t-as="kpi" t-key="kpi.name">
+                    <KpiCard name="kpi.name" value="kpi.value" percentage="kpi.percentage" unit="kpi.unit" />
+                </t>
+            </div>
+            <div class="row mt-2">
+                <div class="col-12">
+                    <div class="p-3 scroll-container" style="background-color: white; color: black; font-size: 18px;">
+                        <span>Розподіл за сортами (м³)</span>
+                    </div>
+                </div>
+                <div class="col-12 mt-2">
+                    <div class="p-3 scroll-container" style="background-color: white; color: black; font-size: 18px;">
+                        <span>Динаміка приходу (м³)</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12">
+                    <h3 class="balance-title">Баланс по камерах сушки</h3>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <t t-foreach="state.cameraData" t-as="camera" t-key="camera.name">
+                    <div class="col-2">
+                        <Camera name="camera.name" volume="camera.volume" loadingStatus="camera.loadingStatus" />
+                    </div>
+                </t>
+            </div>
+        </div>
+    </t>
+</templates>
