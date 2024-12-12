@@ -55,5 +55,3 @@ CrmDashboard.components = { KpiCard, Camera };
 
 // Регистрируем действие в Odoo
 actionRegistry.add("stock_attachment.beech_aggregate_dashboard_tag", CrmDashboard);
-
-export default CrmDashboard;
