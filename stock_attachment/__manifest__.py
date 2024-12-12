@@ -41,16 +41,11 @@ Stock Picking Attachments
 
     'assets': {
         'web.assets_backend': [
-            'stock_attachment/static/src/js/kpi_card.js',
-            'stock_attachment/static/src/js/camera.js',
-            'stock_attachment/static/src/js/beech_aggregate_dashboard.js',
-            'stock_attachment/static/src/xml/dashboard.xml',
-            'stock_attachment/static/src/xml/kpi_card.xml',
-            'stock_attachment/static/src/xml/camera.xml',
-            'stock_attachment/static/src/css/styles.css'
+            'stock_attachment/static/src/js/*.js',
+            'stock_attachment/static/src/xml/*.xml',
+            'stock_attachment/static/src/css/*.css'
             # 'stock_attachment/static/src/js/kanban_button.js',
             # 'stock_attachment/static/src/xml/inventory_kanban_button.xml'
-            # 'stock_attachment/static/src/**/*',
         ],
     },
 
