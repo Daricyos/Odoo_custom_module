@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="stock_attachment.LossDashboard">
+        <div class="container-dashboard">
+           <h1>Аналіз ефективності використання сировини</h1>
+            <div class="row mt-3">
+                <t t-foreach="state.cameraData" t-as="camera" t-key="camera.name">
+                    <div class="col-2">
+                        <Camera name="camera.name" volume="camera.volume" loadingStatus="camera.loadingStatus" />
+                    </div>
+                </t>
+            </div>
+            <div class="row mt-2">
+                <div class="col-12">
+                    <div class="p-3 scroll-container"
+                         style="background-color: white; color: black; font-size: 18px; border-radius: 8px;">
+                        <span>Структура виходу по останнім партіям</span>
+                    </div>
+                </div>
+            </div>
+            <div class="batch-details-table">
+                <h5>Деталізація останніх партій</h5>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Партія</th>
+                            <th>Вхідний об'єм</th>
+                            <th>Вихід шпону</th>
+                            <th>Карандаші</th>
+                            <th>Відходи</th>
+                            <th>Ефективність</th>
+                        </tr>
+                    </thead>
+                    <t t-foreach="state.batches" t-as="batch" t-key="batch.name">
+                        <BatchDetailsTable
+                            name="[[batch.name]]"
+                            inputVolume="[[batch.inputVolume]]"
+                            outputPlywood="[[batch.outputPlywood]]"
+                            pencils="[[batch.pencils]]"
+                            waste="[[batch.waste]]"
+                            efficiency="[[batch.efficiency]]"
+                        />
+                    </t>
+                </table>
+            </div>
+        </div>
+    </t>
+</templates>

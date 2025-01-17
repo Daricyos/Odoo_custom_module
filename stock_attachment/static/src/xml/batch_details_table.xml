@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="stock_attachment.BatchDetailsTable" owl="1">
+        <tbody>
+            <tr>
+                <td><t t-esc="props.name"/></td>
+                <td><t t-esc="props.inputVolume"/> м<sup>3</sup></td>
+                <td><t t-esc="props.outputPlywood"/> м<sup>3</sup></td>
+                <td><t t-esc="props.pencils"/> м<sup>3</sup></td>
+                <td><t t-esc="props.waste"/> м<sup>3</sup></td>
+                <td><t t-esc="props.efficiency"/>%</td>
+            </tr>
+        </tbody>
+    </t>
+</templates>
