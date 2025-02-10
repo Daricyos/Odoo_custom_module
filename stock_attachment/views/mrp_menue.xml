@@ -1,0 +1,8 @@
+<odoo>
+    <menuitem id="menu_mrp_churak_production_report"
+            name="Churak production"
+            parent="mrp.menu_mrp_reporting"
+            action="mrp_churak_production_report"
+            groups="mrp.group_mrp_routings"
+            sequence="20"/>
+</odoo>

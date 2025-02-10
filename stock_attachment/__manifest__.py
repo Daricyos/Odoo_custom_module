@@ -29,11 +29,14 @@ Stock Picking Attachments
 
         'views/receiving_wood.xml',
         'views/stock_picking_views.xml',
+        'views/res_partner_view.xml',
+        'views/churak_production_report.xml',
 
         'views/ir_attachment_view.xml',
 
         'views/operations_view.xml',
         'views/stock_menu.xml',
+        'views/mrp_menue.xml',
     ],
 
     'images': ['static/description/icon.svg'],
