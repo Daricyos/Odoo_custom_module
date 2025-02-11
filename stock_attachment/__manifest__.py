@@ -30,7 +30,9 @@ Stock Picking Attachments
         'views/receiving_wood.xml',
         'views/stock_picking_views.xml',
         'views/res_partner_view.xml',
+        'views/recycling_rates_grade_pivot.xml',
         'views/churak_production_report.xml',
+
 
         'views/ir_attachment_view.xml',
 
