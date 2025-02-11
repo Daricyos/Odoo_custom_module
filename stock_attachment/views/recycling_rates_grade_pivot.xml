@@ -1,0 +1,28 @@
+<odoo>
+    <record id="recycling_rates_grade_report_view_pivot" model="ir.ui.view">
+        <field name="name">recycling.rates.grade.report.view.pivot</field>
+        <field name="model">mrp.production</field>
+        <field name="arch" type="xml">
+            <pivot string="Recycling rates by grade">
+                <field name="date_start" type="row"/>
+                <field name="date_start" type="row" interval="day"/>
+
+                <field name="product_id" type="col" string="Сорт сировини"/>
+                <field name="name" type="row"/>
+                <field name="total_raw_material_qty" type="measure" string="Обсяг використаної сировини (м³)"/>
+                <field name="product_qty" type="measure" string="Вихід готової продукції (м³)"/>
+                <field name="processing_coefficient" type="measure" string="Коэффицієнт переробки"/>
+
+            </pivot>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="mrp_recycling_rates_grade_report">
+        <field name="name">Коефіцієнти переробки по сортах</field>
+        <field name="res_model">mrp.production</field>
+        <field name="domain">[('state', '=', 'done')]</field>
+        <field name="context">{}</field>
+        <field name="view_mode">pivot</field>
+        <field name="view_id" ref="recycling_rates_grade_report_view_pivot"/>
+    </record>
+</odoo>

@@ -1,8 +1,13 @@
 <odoo>
     <menuitem id="menu_mrp_churak_production_report"
-            name="Churak production"
+            name="Виробництво чураку"
             parent="mrp.menu_mrp_reporting"
             action="mrp_churak_production_report"
-            groups="mrp.group_mrp_routings"
             sequence="20"/>
+
+    <menuitem id="menu_mrp_recycling_rates_grade_report"
+            name="Коефіцієнти переробки по сортах"
+            parent="mrp.menu_mrp_reporting"
+            action="mrp_recycling_rates_grade_report"
+            sequence="99"/>
 </odoo>

@@ -9,17 +9,18 @@
 
                 <field name="product_id" type="col" string="Сорт чураку"/>
                 <field name="name" type="row"/>
-                <field name="product_qty" type="measure" string="Объём произведённого (м³)"/>
-                <field name="total_raw_material_qty" type="measure" string="Использовано сырья (м³)"/>
+                <field name="product_qty" type="measure" string="Обсяг виробленого (м³)"/>
+                <field name="total_raw_material_qty" type="measure" string="Використано сировини (м³)"/>
             </pivot>
         </field>
     </record>
 
     <record model="ir.actions.act_window" id="mrp_churak_production_report">
-        <field name="name">Churak production</field>
+        <field name="name">Виробництво чураку</field>
         <field name="res_model">mrp.production</field>
         <field name="domain">[('product_id.name', 'ilike', 'Чурак'), ('state', '=', 'done')]</field>
         <field name="context">{}</field>
         <field name="view_mode">pivot</field>
+        <field name="view_id" ref="churak_production_report_view_pivot"/>
     </record>
 </odoo>
