@@ -8,6 +8,13 @@ import os
 class StockPicking(models.Model):
     _inherit = 'stock.picking'
     document_ids = fields.Many2many('ir.attachment', string='Завантажити документи')
+    product_quantity_t = fields.Float(compute='_compute_total_move_quantity', store=True)
+
+    @api.depends('move_ids_without_package.product_uom_qty')
+    def _compute_total_move_quantity(self):
+        print(self)
+        for picking in self:
+            picking.product_quantity_t = sum(picking.move_ids_without_package.mapped('product_uom_qty'))
 
     @api.constrains('document_ids')
     def _check_file_type(self):
