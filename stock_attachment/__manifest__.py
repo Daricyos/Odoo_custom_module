@@ -33,10 +33,10 @@ Stock Picking Attachments
         'views/recycling_rates_grade_pivot.xml',
         'views/churak_production_report.xml',
 
-
         'views/ir_attachment_view.xml',
 
         'views/operations_view.xml',
+        'views/stock_dashboard.xml',
         'views/stock_menu.xml',
         'views/mrp_menue.xml',
     ],
@@ -46,11 +46,13 @@ Stock Picking Attachments
 
     'assets': {
         'web.assets_backend': [
+            'stock_attachment/static/src/components/**/*.js',
+            'stock_attachment/static/src/components/**/*.xml',
+            'stock_attachment/static/src/components/**/*.scss',
+
             'stock_attachment/static/src/js/*.js',
             'stock_attachment/static/src/xml/*.xml',
             'stock_attachment/static/src/css/*.css'
-            # 'stock_attachment/static/src/js/kanban_button.js',
-            # 'stock_attachment/static/src/xml/inventory_kanban_button.xml'
         ],
     },
 

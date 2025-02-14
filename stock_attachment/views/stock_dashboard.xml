@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="dashboard_action" model="ir.actions.client">
+        <field name="name">Дашборд</field>
+        <field name="tag">stock_attachment.dashboard_stock</field>
+    </record>
+
+    <menuitem
+        id="dashboard"
+        name="Дашборд"
+        parent="stock.menu_stock_root"
+        action="dashboard_action"
+        sequence="10"/>
+
+    </data>
+</odoo>
