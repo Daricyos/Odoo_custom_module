@@ -68,10 +68,6 @@ class ReceivingWood(models.Model):
             location_dest = self.env['stock.location'].search(
                 [('name', '=', 'Запаси'), ('location_id', '=', 'БІРЖА')], limit=1)
 
-            location_dest_id = self.env['stock.location'].search(
-                [('name', '=', 'Запаси')], limit=1)
-            print(location_dest_id.location_id.name)
-
             if not location_dest:
                 raise ValidationError("Не знайдено локації 'БІРЖА'.")
 

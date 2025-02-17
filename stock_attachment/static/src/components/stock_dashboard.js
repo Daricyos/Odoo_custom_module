@@ -6,40 +6,62 @@ import { ChartRenderer } from "./chart_renderer/chart_renderer"
 import { loadJS } from "@web/core/assets"
 import { useService } from "@web/core/utils/hooks"
 const { Component, onWillStart, useRef, onMounted, useState } = owl
-//import { getColor } from "@web/views/graph/colors"
 
 export class StockAttachmentDashboard extends Component {
-    //Коефіцієнти переробки
-    getTopProducts(){
-        this.state.topProducts = {
-
-        }
-    }
     //Вироблено чураку
-    getChurakuProduced(){
-        this.state.churakuProduced = {}
+    async getChurakuProduced(){
+        let domain = [['state', 'in', ['done']], ['product_id', '=', this.state.wareChurakuId]]
+        if (this.state.period > 0){
+            domain.push(
+                ['date_finished', '>', this.state.current_date]
+            )
+        }
+
+        const data = await this.orm.readGroup(
+            "mrp.production",
+            domain,
+            ['product_id', 'product_qty'],
+            ['product_id'],
+        );
+
+        this.state.churakuProduced = {
+            data: {
+                labels: data.map(d => d.product_id[1]),
+                  datasets: [
+                  {
+                    label: 'Total',
+                    data: data.map(d => d.product_qty),
+                    hoverOffset: 4,
+                  }]
+            }
+        }
     }
 
     // Прихід деревини по сортах
     async getArrivalWoodGrade(){
-//        const data = await this.orm.readGroup(
-//            "stock.picking",
-//            [],
-//            ['picking_type_id', 'date_done'], ['picking_type_id'])
-//        console.log(data)
+        let domain = [['picking_id.state', 'in', ['done']], ['picking_id.picking_type_id', '=', this.state.pickingTypeId]]
+        if (this.state.period > 0){
+            domain.push(
+                ['picking_id.date_done', '>', this.state.current_date]
+            )
+        }
+
+        const data = await this.orm.readGroup(
+            "stock.move",
+            domain,
+            ['product_id', 'product_uom_qty'],
+            ['product_id'],
+        );
+
         this.state.arrivalWoodGrade = {
             data: {
-//                labels: data.map(d => d.product_id[1]),
-//                  datasets: [
-//                  {
-//                    label: 'Total',
-//                    data: data.map(d => d.product_id_count[1]),
-//                    hoverOffset: 4
-//                  },{
-//                    label: 'My Second Dataset',
-//                    data: [100, 70, 150],
-//                    hoverOffset: 4
-//                  }]
+                labels: data.map(d => d.product_id[1]),
+                  datasets: [
+                  {
+                    label: 'Total',
+                    data: data.map(d => d.product_uom_qty),
+                    hoverOffset: 4,
+                  }]
             }
         }
     }
@@ -61,9 +83,9 @@ export class StockAttachmentDashboard extends Component {
             this.getDates()
             await this.qetQuotations()
             await this.qetManufactured()
+            await this.getRecyclingRates()
 
-            this.getTopProducts()
-            this.getChurakuProduced()
+            await this.getChurakuProduced()
             await this.getArrivalWoodGrade()
         })
     }
@@ -72,6 +94,7 @@ export class StockAttachmentDashboard extends Component {
         this.getDates()
         await this.qetQuotations()
         await this.qetManufactured()
+        await this.getRecyclingRates()
     }
 
     getDates(){
@@ -79,6 +102,7 @@ export class StockAttachmentDashboard extends Component {
         this.state.previous_date = moment().subtract(this.state.period * 2, 'days').format('L')
     }
 
+    // Прихід деревини по сортах
     async qetQuotations(){
         const wareHouse = await this.orm.searchRead("stock.warehouse",
             [],
@@ -130,6 +154,7 @@ export class StockAttachmentDashboard extends Component {
         this.state.quotations.percentage = percentage.toFixed(2)
     }
 
+    //Вироблено чураку
     async qetManufactured(){
         const wareChuraku = await this.orm.searchRead("product.product",
             [['name', 'ilike', 'Чурак']],
@@ -137,6 +162,8 @@ export class StockAttachmentDashboard extends Component {
         );
 
         const wareChurakuId = wareChuraku.map(product => product.id);
+
+        this.state.wareChurakuId = wareChurakuId;
 
 
         let domain = [['state', 'in', ['done']], ['product_id', '=', wareChurakuId]]
@@ -170,6 +197,59 @@ export class StockAttachmentDashboard extends Component {
         }
     }
 
+    //Коефіцієнти переробки
+    async getRecyclingRates(){
+        let domain = [['state', 'in', ['done']]]
+        if (this.state.period > 0){
+            domain.push(
+                ['date_finished', '>', this.state.current_date]
+            )
+        }
+        const recycling_rates = await this.orm.readGroup('mrp.production', domain, ["processing_coefficient:sum"],[])
+
+        // previous period
+
+        let prev_domain = [['state', 'in', ['done']]]
+        if (this.state.period > 0){
+            prev_domain.push(
+                ['date_finished', '>', this.state.previous_date], ['date_finished', '<=', this.state.current_date]
+            )
+        }
+
+        const prev_recycling_rates = await this.orm.readGroup('mrp.production', prev_domain, ["processing_coefficient:sum"],[])
+        const recycling_rates_percentage = (
+            (recycling_rates[0].processing_coefficient - prev_recycling_rates[0].processing_coefficient) / prev_recycling_rates[0].processing_coefficient
+        ) * 100
+
+        //table view
+//        const recyclingRatesSettings = await this.orm.readGroup(
+//            'res.config.settings',
+//            [],
+//            ['recycling_rates']
+//        );
+//        console.log('recyclingRatesSettings', recyclingRatesSettings)
+
+        const productionRecords = await this.orm.readGroup(
+            'mrp.production',
+            domain,
+            ['product_id', 'product_qty', 'processing_coefficient', 'total_raw_material_qty'], ['product_id']
+        );
+
+        console.log('productionRecords', productionRecords)
+        this.state.productionRecords = productionRecords;
+
+
+        this.state.rates = {
+            recycling_rates: recycling_rates[0].processing_coefficient,
+            recycling_rates_percentage: recycling_rates_percentage.toFixed(2),
+//            product_id: record.product_id[1],
+//            product_qty: record.product_qty,
+//            processing_coefficient: record.processing_coefficient,
+        }
+    }
+
+
+    // Прихід деревини по сортах view
     viewQuotations(){
         let domain = [['state', 'in', ['done']], ['picking_type_id', '=', this.state.pickingTypeId]]
         if (this.state.period > 0){
@@ -189,6 +269,29 @@ export class StockAttachmentDashboard extends Component {
             ]
         })
     }
+
+    //Вироблено чураку
+    viewChurakuProduced(){
+        let domain = [['state', 'in', ['done']], ['product_id', '=', this.state.wareChurakuId]]
+        if (this.state.period > 0){
+            domain.push(
+                ['date_finished', '>', this.state.current_date]
+            )
+        }
+
+        this.actionService.doAction({
+            type: "ir.actions.act_window",
+            name: "ChurakuProduced",
+            res_model: "mrp.production",
+            domain,
+            views: [
+                [false, "list"],
+                [false, "form"],
+            ]
+        })
+
+    }
+
 }
 
 StockAttachmentDashboard.template = "stock_attachment.StockAttachmentDashboard"

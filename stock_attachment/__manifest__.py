@@ -32,6 +32,7 @@ Stock Picking Attachments
         'views/res_partner_view.xml',
         'views/recycling_rates_grade_pivot.xml',
         'views/churak_production_report.xml',
+        'views/res_config_settings.xml',
 
         'views/ir_attachment_view.xml',
 
