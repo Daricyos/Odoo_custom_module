@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <template xml:space="preserve">
     <t t-name="stock_attachment.StockAttachmentDashboard" owl="1">
+<!--        <style>-->
+<!--            .text-danger {-->
+<!--                color: red;-->
+<!--            }-->
+<!--        </style>-->
         <div class="vh-100 overflow-auto bg-muted">
             <div class="row m-3">
                 <div class="col-lg-7">
@@ -25,12 +30,12 @@
                     </div>
                     <div class="row">
                         <KpiCardStock onClick.bind="viewQuotations" name="'Прихід деревини'" value="state.quotations.value" percentage="state.quotations.percentage"/>
-                        <KpiCardStock name="'Вироблено чураку'" value="state.orders.product_qty" percentage="state.orders.product_qty_percentage"/>
-                        <KpiCardStock name="'Коефіцієнти переробки'" value="'30.50K'" percentage="-3"/>
-                        <KpiCardStock name="'Поточні залишки'" value="'2.5K'" percentage="-10"/>
+                        <KpiCardStock onClick.bind="viewChurakuProduced" name="'Вироблено чураку'" value="state.orders.product_qty" percentage="state.orders.product_qty_percentage"/>
+                        <KpiCardStock name="'Коефіцієнти переробки'" value="state.rates.recycling_rates" percentage="state.rates.recycling_rates_percentage"/>
+<!--                        <KpiCardStock name="'Поточні залишки'" value="'2.5K'" percentage="-10"/>-->
                     </div>
                     <div class="row">
-                        <div class="col-lg-6 m-0 p-0">
+                        <div class="col-lg-12 m-0 p-0">
                             <div class="shadow-sm border m-2 p-4 bg-white">
                                 <div class="d-flex align-items-center justify-content-between">
                                     <h3 class="text-primary fw-bold">Коефіцієнти переробки по сортах</h3>
@@ -38,20 +43,39 @@
                                         <span class="fa fa-arrow-right text-white"/>
                                     </div>
                                 </div>
-                                <ChartRenderer type="'line'" title="'Коефіцієнти переробки по сортах'" config="state.topProducts"/>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Товар</th>
+                                            <th>Кількість</th>
+                                            <th>Використано сировини</th>
+                                            <th>Коефіцієнти переробки</th>
+                                        </tr>
+                                    </thead>
+                                   <tbody>
+                                        <t t-foreach="state.productionRecords" t-as="record" t-key="record.product_id[0]">
+                                            <tr>
+                                                <td><t t-esc="record.product_id[1]"/></td> <!-- Название товара -->
+                                                <td><t t-esc="record.product_qty"/></td>
+                                                <td><t t-esc="record.total_raw_material_qty"/></td>
+                                                <td><t t-esc="record.processing_coefficient"/></td> <!-- Коэффициент переработки -->
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
-                        <div class="col-lg-6 m-0 p-0">
-                            <div class="shadow-sm border m-2 p-4 bg-white">
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <h3 class="text-primary fw-bold">Поточні залишки</h3>
-                                    <div class="px-3 py-1 bg-primary cursor-pointer">
-                                        <span class="fa fa-arrow-right text-white"/>
-                                    </div>
-                                </div>
-<!--                                <ChartRenderer type="'line'" title="'Поточні залишки'"/>-->
-                            </div>
-                        </div>
+<!--                        <div class="col-lg-6 m-0 p-0">-->
+<!--                            <div class="shadow-sm border m-2 p-4 bg-white">-->
+<!--                                <div class="d-flex align-items-center justify-content-between">-->
+<!--                                    <h3 class="text-primary fw-bold">Поточні залишки</h3>-->
+<!--                                    <div class="px-3 py-1 bg-primary cursor-pointer">-->
+<!--                                        <span class="fa fa-arrow-right text-white"/>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--&lt;!&ndash;                                <ChartRenderer type="'line'" title="'Поточні залишки'"/>&ndash;&gt;-->
+<!--                            </div>-->
+<!--                        </div>-->
                     </div>
                 </div>
                 <div class="col-lg-5">
@@ -64,7 +88,7 @@
                                         <span class="fa fa-arrow-right text-white"/>
                                     </div>
                                 </div>
-                                <ChartRenderer type="'bar'" title="'Прихід деревини по сортах (м³)'" config="state.arrivalWoodGrade"/>
+                                <ChartRenderer type="'doughnut'" title="'Прихід деревини по сортах (м³)'" config="state.arrivalWoodGrade"/>
                             </div>
                         </div>
                     </div>
@@ -77,7 +101,7 @@
                                         <span class="fa fa-arrow-right text-white"/>
                                     </div>
                                 </div>
-                                <ChartRenderer type="'line'" title="'Вироблено чураку (м³)'" config="state.churakuProduced"/>
+                                <ChartRenderer type="'doughnut'" title="'Вироблено чураку (м³)'" config="state.churakuProduced"/>
                             </div>
                         </div>
                     </div>
