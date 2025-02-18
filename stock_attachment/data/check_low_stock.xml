@@ -1,0 +1,14 @@
+<odoo>
+    <data>
+        <record id="ir_cron_check_low_stock" model="ir.cron">
+            <field name="name">Проверка низкого уровня запасов</field>
+            <field name="model_id" ref="product.model_product_product"/>
+            <field name="state">code</field>
+            <field name="code">model.run_low_stock_check()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall">False</field>
+        </record>
+    </data>
+</odoo>

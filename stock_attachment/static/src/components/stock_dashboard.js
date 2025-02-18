@@ -232,11 +232,25 @@ export class StockAttachmentDashboard extends Component {
         const productionRecords = await this.orm.readGroup(
             'mrp.production',
             domain,
-            ['product_id', 'product_qty', 'processing_coefficient', 'total_raw_material_qty'], ['product_id']
+            [
+                'product_id',
+                'product_qty',
+                'processing_coefficient',
+                'total_raw_material_qty',
+                'recycling_rates_config'
+            ], ['product_id']
         );
 
-        console.log('productionRecords', productionRecords)
+//        console.log('productionRecords', productionRecords)
         this.state.productionRecords = productionRecords;
+
+        const currentBalances = await this.orm.readGroup(
+            'product.product',
+            [],
+            ['name', 'qty_available:sum', 'minimum_stock_config'], ['name']
+        )
+        console.log('currentBalances', currentBalances)
+        this.state.currentBalances = currentBalances;
 
 
         this.state.rates = {
