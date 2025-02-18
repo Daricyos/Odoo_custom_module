@@ -27,6 +27,8 @@ Stock Picking Attachments
         'security/ir.model.access.csv',
         'security/security.xml',
 
+        'data/check_low_stock.xml',
+
         'views/receiving_wood.xml',
         'views/stock_picking_views.xml',
         'views/res_partner_view.xml',

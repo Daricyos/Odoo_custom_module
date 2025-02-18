@@ -1,4 +1,5 @@
 from odoo import api, fields, models
+from odoo.odoo.tools.populate import compute
 
 
 class MrpProduction(models.Model):
@@ -21,6 +22,10 @@ class MrpProduction(models.Model):
         compute="_compute_processing_coefficient",
         store=True,
         digits=(16, 4),
+    )
+
+    recycling_rates_config = fields.Float(
+        store=True
     )
 
     @api.depends('move_raw_ids.product_uom_qty')

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <template xml:space="preserve">
     <t t-name="stock_attachment.StockAttachmentDashboard" owl="1">
-<!--        <style>-->
-<!--            .text-danger {-->
-<!--                color: red;-->
-<!--            }-->
-<!--        </style>-->
+        <style>
+            .bg-danger-row {
+                background-color: #f8d7da !important;
+            }
+        </style>
         <div class="vh-100 overflow-auto bg-muted">
             <div class="row m-3">
                 <div class="col-lg-7">
@@ -13,7 +13,7 @@
                         <div class="col m-0 p-0">
                             <div class="shadow-sm border m-2 p-4 bg-white">
                                 <div class="d-flex align-items-center justify-content-between">
-                                    <h1 class="text-primary fw-bold">Custom Stock Dashboard</h1>
+                                    <h1 class="text-primary fw-bold">Дашборд</h1>
                                     <div>
                                         <select class="form-select" t-model="state.period"
                                         t-on-change="onChangePeriod">
@@ -38,10 +38,7 @@
                         <div class="col-lg-12 m-0 p-0">
                             <div class="shadow-sm border m-2 p-4 bg-white">
                                 <div class="d-flex align-items-center justify-content-between">
-                                    <h3 class="text-primary fw-bold">Коефіцієнти переробки по сортах</h3>
-                                    <div class="px-3 py-1 bg-primary cursor-pointer">
-                                        <span class="fa fa-arrow-right text-white"/>
-                                    </div>
+                                    <h3 class="text-primary fw-bold">Поточні залишки</h3>
                                 </div>
                                 <table class="table table-bordered">
                                     <thead>
@@ -54,7 +51,7 @@
                                     </thead>
                                    <tbody>
                                         <t t-foreach="state.productionRecords" t-as="record" t-key="record.product_id[0]">
-                                            <tr>
+                                            <tr t-att-class="record.processing_coefficient > record.recycling_rates_config ? 'bg-danger-row' : ''">
                                                 <td><t t-esc="record.product_id[1]"/></td> <!-- Название товара -->
                                                 <td><t t-esc="record.product_qty"/></td>
                                                 <td><t t-esc="record.total_raw_material_qty"/></td>
@@ -65,17 +62,31 @@
                                 </table>
                             </div>
                         </div>
-<!--                        <div class="col-lg-6 m-0 p-0">-->
-<!--                            <div class="shadow-sm border m-2 p-4 bg-white">-->
-<!--                                <div class="d-flex align-items-center justify-content-between">-->
-<!--                                    <h3 class="text-primary fw-bold">Поточні залишки</h3>-->
-<!--                                    <div class="px-3 py-1 bg-primary cursor-pointer">-->
-<!--                                        <span class="fa fa-arrow-right text-white"/>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--&lt;!&ndash;                                <ChartRenderer type="'line'" title="'Поточні залишки'"/>&ndash;&gt;-->
-<!--                            </div>-->
-<!--                        </div>-->
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 m-0 p-0">
+                            <div class="shadow-sm border m-2 p-4 bg-white">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <h3 class="text-primary fw-bold">Коефіцієнти переробки по сортах</h3>
+                                </div>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Товар</th>
+                                            <th>Кількість</th>
+                                        </tr>
+                                    </thead>
+                                   <tbody>
+                                        <t t-foreach="state.currentBalances" t-as="record" t-key="record.name">
+                                            <tr t-att-class="record.minimum_stock_config > record.qty_available ? 'bg-danger-row' : ''">
+                                                <td><t t-esc="record.name"/></td>
+                                                <td><t t-esc="record.qty_available"/></td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-5">
@@ -84,9 +95,6 @@
                             <div class="shadow-sm border m-2 p-4 bg-white">
                                 <div class="d-flex align-items-center justify-content-between">
                                     <h3 class="text-primary fw-bold">Прихід деревини по сортах (м³)</h3>
-                                    <div class="px-3 py-1 bg-primary cursor-pointer">
-                                        <span class="fa fa-arrow-right text-white"/>
-                                    </div>
                                 </div>
                                 <ChartRenderer type="'doughnut'" title="'Прихід деревини по сортах (м³)'" config="state.arrivalWoodGrade"/>
                             </div>
@@ -97,9 +105,6 @@
                             <div class="shadow-sm border m-2 p-4 bg-white">
                                 <div class="d-flex align-items-center justify-content-between">
                                     <h3 class="text-primary fw-bold">Вироблено чураку (м³)</h3>
-                                    <div class="px-3 py-1 bg-primary cursor-pointer">
-                                        <span class="fa fa-arrow-right text-white"/>
-                                    </div>
                                 </div>
                                 <ChartRenderer type="'doughnut'" title="'Вироблено чураку (м³)'" config="state.churakuProduced"/>
                             </div>
