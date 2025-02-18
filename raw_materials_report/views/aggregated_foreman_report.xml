@@ -186,7 +186,6 @@
                                 <p>
                                     за п’ятницю,
                                     <input type="text" placeholder="введіть дату" class="o_date_input" />
-                                    , 2024р
                                 </p>
                             </div>
                             <table class="o_table_section">
