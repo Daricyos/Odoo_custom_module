@@ -2,7 +2,7 @@
 
 import { registry } from "@web/core/registry"
 import { loadJS } from "@web/core/assets"
-const { Component, onWillStart, useRef, onMounted } = owl
+const { Component, onWillStart, useRef, onMounted, useEffect, onWillUnmount } = owl
 
 export class ChartRenderer extends Component {
     setup(){
@@ -11,12 +11,25 @@ export class ChartRenderer extends Component {
             await loadJS("https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js")
         })
 
+        useEffect(()=>{
+            this.renderChart()
+        }, ()=>[this.props.config])
+
         onMounted(()=>this.renderChart())
+
+        onWillUnmount(()=>{
+            if (this.chart){
+                this.chart.destroy()
+            }
+        })
     }
 
     renderChart(){
-        new Chart(
-        this.chartRef.el,
+        if (this.chart){
+            this.chart.destroy()
+        }
+
+        this.chart = new Chart(this.chartRef.el,
         {
           type: this.props.type,
           data: this.props.config.data,
