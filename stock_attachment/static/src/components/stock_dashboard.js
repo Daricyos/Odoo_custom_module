@@ -95,6 +95,9 @@ export class StockAttachmentDashboard extends Component {
         await this.qetQuotations()
         await this.qetManufactured()
         await this.getRecyclingRates()
+
+        await this.getChurakuProduced()
+        await this.getArrivalWoodGrade()
     }
 
     getDates(){
@@ -144,7 +147,7 @@ export class StockAttachmentDashboard extends Component {
                 ['date_done', '>', this.state.previous_date], ['date_done', '<=', this.state.current_date]
             )
         }
-        const prev_data = await this.orm.readGroup('stock.picking', domain, ['product_quantity_t:sum'],[])
+        const prev_data = await this.orm.readGroup('stock.picking', prev_domain, ['product_quantity_t:sum'],[])
         const percentage = (
             (
                 data[0].product_quantity_t - prev_data[0].product_quantity_t
