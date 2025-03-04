@@ -1,5 +1,3 @@
-from itertools import product
-
 from odoo import api, fields, models
 import os
 from odoo.exceptions import ValidationError

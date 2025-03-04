@@ -12,41 +12,6 @@ class StockQuant(models.Model):
         store=True
     )
 
-    # def _check_low_stock(self):
-    #     minimum_stock = float(
-    #         self.env['ir.config_parameter'].sudo().get_param('stock_attachment.minimum_stock', default=0.0))
-    #     if not minimum_stock or not isinstance(minimum_stock, float):
-    #         raise ValueError("Параметр 'stock_attachment.minimum_stock' не настроен или имеет некорректное значение.")
-    #
-    #     low_stock_products = self.search([
-    #         ('qty_available', '<', minimum_stock)
-    #     ])
-    #
-    #     system_partner_id = self.env.ref('base.partner_root')
-    #
-    #     stock_managers = self.env.ref('base.group_user').users
-    #     if not stock_managers:
-    #         raise ValueError("Нет пользователей с правами менеджера склада.")
-    #
-    #
-    #
-    #
-    #     for product in low_stock_products:
-    #         message_body = (
-    #             f"Запасы продукта '{product.name}' на исходе! Текущий запас: {product.qty_available}, "
-    #             f"минимальный запас: {minimum_stock}."
-    #         )
-    #         for manager in stock_managers:
-    #             print(f"Manager: {manager.name}, Partner ID: {manager.partner_id.id}")
-    #             manager.partner_id.sudo().message_post(
-    #                 body=message_body,
-    #                 author_id=self.env.user.partner_id.id,
-    #                 message_type='notification',
-    #                 subtype_xmlid='mail.mt_comment',
-    #                 partner_ids=[manager.partner_id.id],# Используем 'mail.mt_comment' для видимости
-    #             )
-
-    from odoo.addons.bus.models.bus import dispatch
 
     def _check_low_stock(self):
         # Получаем минимальный запас из параметров системы
@@ -78,7 +43,7 @@ class StockQuant(models.Model):
 
                 # Формируем уведомление
                 notification = {
-                    'type': 'simple_notification',
+                    'type': 'warning',
                     'title': "Низкий запас!",
                     'message': message_body,
                     'sticky': True,
