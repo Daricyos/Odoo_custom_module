@@ -43,7 +43,7 @@ class StockQuant(models.Model):
 
                 # Формируем уведомление
                 notification = {
-                    'type': 'simple_notification',
+                    'type': 'warning',
                     'title': "Низкий запас!",
                     'message': message_body,
                     'sticky': True,
