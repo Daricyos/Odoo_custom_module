@@ -5,6 +5,13 @@
         <field name="model">stock.picking</field>
         <field name="inherit_id" ref="stock.view_picking_form"/>
         <field name="arch" type="xml">
+            <xpath expr="//field[@name='move_ids_without_package']" position="after">
+                <group name="note_group" col="6" class="mt-2 mt-md-0">
+                    <group class="oe_subtotal_footer" colspan="2" name="sale_total">
+                        <field name="product_quantity_t"  string="Загальна м³" colspan="2" readonly="1"/>
+                    </group>
+                </group>
+            </xpath>
             <notebook position="inside">
                 <page string="Документи" name="documents">
                     <group>
@@ -76,6 +83,14 @@
             </xpath>
         </field>
     </record>
+
+<!--    <template id="report_delivery_document_inherit" inherit_id="stock.report_delivery_document">-->
+<!--        <xpath expr="//table[@name='stock_move_table']" position="after">-->
+<!--            <div class="mt-3">-->
+<!--                <strong>Total Product Quantity:</strong>-->
+<!--            </div>-->
+<!--        </xpath>-->
+<!--    </template>-->
 
 <!--    <data>-->
 <!--        <record id="stock.menu_stock_warehouse_mgmt" model="ir.ui.menu">-->

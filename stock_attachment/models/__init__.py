@@ -6,3 +6,4 @@ from . import res_partner
 from . import mrp_production
 from . import res_config_settings
 from . import stock_quant
+from . import stock_move
