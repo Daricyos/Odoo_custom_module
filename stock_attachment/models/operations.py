@@ -13,7 +13,7 @@ class ChopLogs(models.Model):
         'stock.location',  # Модель складів в Odoo
         string='Отримати з',  # Назва поля
         required=True,  # Опційно: зробити обов'язковим
-        default=lambda self: self.env['stock.location'].search([('name', 'in',['Запаси']),('location_id', 'in', ['СИРОВ'])], limit=1)  # Опційно: default перший склад
+        default=lambda self: self.env['stock.location'].search([('name', 'in',['Запаси']),('location_id', 'in', ['БІРЖА'])], limit=1)  # Опційно: default перший склад
     )
     warehouse_to_id = fields.Many2one(
         'stock.location',  # Модель складів в Odoo

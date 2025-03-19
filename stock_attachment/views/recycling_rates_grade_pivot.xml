@@ -1,4 +1,22 @@
 <odoo>
+    <record id="view_mrp_production_form_inherit" model="ir.ui.view">
+        <field name="name">mrp.production.form.inherit</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='move_raw_ids']/tree/field[@name='product_uom_qty'][@widget='mrp_should_consume']" position="attributes">
+                <attribute name="string">Норма витрати сировини</attribute>
+            </xpath>
+            <xpath expr="//field[@name='move_raw_ids']/tree/field[@name='product_uom_qty']" position="after">
+                <field name="actual_costs"/>
+                <field name="actual_yield_factor"/>
+            </xpath>
+            <xpath expr="//field[@name='move_raw_ids']/tree" position="attributes">
+                <attribute name="decoration-danger">actual_costs > product_uom_qty</attribute>
+            </xpath>
+        </field>
+    </record>
+
     <record id="recycling_rates_grade_report_view_pivot" model="ir.ui.view">
         <field name="name">recycling.rates.grade.report.view.pivot</field>
         <field name="model">mrp.production</field>

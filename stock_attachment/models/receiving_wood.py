@@ -16,7 +16,15 @@ class ReceivingWood(models.Model):
 
     move_ids_without_package = fields.One2many(
         'receiving.wood.line', 'receiving_wood_id', string="Stock move")
+
+    product_quantity_t = fields.Float(compute='_compute_total_move_quantity', store=True, digits=(16, 3))
+
     document_ids = fields.Many2many('ir.attachment', string='Завантажити документи')
+
+    @api.depends('move_ids_without_package.quantity')
+    def _compute_total_move_quantity(self):
+        for picking in self:
+            picking.product_quantity_t = sum(picking.move_ids_without_package.mapped('quantity'))
 
     @api.constrains('document_ids')
     def _check_file_type(self):
@@ -121,4 +129,19 @@ class ReceivingWoodLine(models.Model):
     receiving_wood_id = fields.Many2one(
         'receiving.wood', string="Receiving Wood", ondelete='cascade')
     product_id = fields.Many2one('product.product', string="Продукт")
-    quantity = fields.Float(string="Кількість")
+    quantity = fields.Float(string="Кількість", digits=(16, 3))
+
+    percentage = fields.Float(
+        string="Процент (%)",
+        compute="_compute_percentage",
+        store=True,
+        digits=(16, 2)
+    )
+
+    @api.depends('quantity', 'receiving_wood_id.product_quantity_t')
+    def _compute_percentage(self):
+        for line in self:
+            if line.receiving_wood_id.product_quantity_t > 0:
+                line.percentage = (line.quantity / line.receiving_wood_id.product_quantity_t) * 100
+            else:
+                line.percentage = 0.0
