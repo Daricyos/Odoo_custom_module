@@ -1,5 +1,4 @@
 from odoo import api, fields, models
-from odoo.odoo.tools.populate import compute
 
 
 class MrpProduction(models.Model):
