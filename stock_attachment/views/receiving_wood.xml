@@ -13,6 +13,7 @@
                     </group>
                     <group>
                         <field name="invoice_number"/>
+                        <field name="currency_id"/>
                     </group>
                     <group string="Завантаження докуентів">
                         <group>
@@ -81,12 +82,15 @@
                                         {"unit": "m³"}
                                     </attribute>
                                 </field>
+                                <field name="price"/>
+                                <field name="currency_id"/>
                                 <field name="percentage"/>
                             </tree>
                         </field>
                         <group name="note_group" col="6" class="mt-2 mt-md-0">
                             <group class="oe_subtotal_footer" colspan="2" name="sale_total">
                                 <field name="product_quantity_t"  string="Загальна м³" colspan="2" readonly="1"/>
+                                <field name="total_price"  string="Загальна Ціна" colspan="2" readonly="1"/>
                             </group>
                         </group>
                     </page>

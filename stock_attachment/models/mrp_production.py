@@ -1,4 +1,5 @@
 from odoo import api, fields, models
+from odoo.odoo.tools.populate import compute
 
 
 class MrpProduction(models.Model):
@@ -23,9 +24,17 @@ class MrpProduction(models.Model):
         digits=(16, 4),
     )
 
+    # by_product_qty = fields.Float(compute='_compute_by_product_qty', store=True,)
+
     recycling_rates_config = fields.Float(
         store=True
     )
+    #
+    # @api.depends('move_raw_ids.actual_costs', 'product_qty')
+    # def _compute_by_product_qty(self):
+    #     for obj in self:
+    #         obj.by_product_qty = obj.move_raw_ids.actual_costs - obj.product_qty
+
 
     @api.depends('move_raw_ids.product_uom_qty')
     def _compute_total_raw_material_qty(self):

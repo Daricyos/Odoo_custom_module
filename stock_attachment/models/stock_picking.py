@@ -8,8 +8,15 @@ import os
 class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
+    currency_id = fields.Many2one('res.currency', string="Валюта", required=True, )
+    total_price = fields.Monetary('Ціна', currency_field='currency_id', compute='_compute_total_price')
     document_ids = fields.Many2many('ir.attachment', string='Завантажити документи')
     product_quantity_t = fields.Float(compute='_compute_total_move_quantity', store=True, digits=(16, 3))
+
+    @api.depends('move_ids_without_package.price_unit')
+    def _compute_total_price(self):
+        for obj in self:
+            obj.total_price = sum(obj.move_ids_without_package.mapped('price_unit'))
 
     @api.depends('move_ids_without_package.product_uom_qty')
     def _compute_total_move_quantity(self):
@@ -38,22 +45,6 @@ class StockPicking(models.Model):
                         f'Файл "{attachment.name}" завеликий. '
                         f'Максимальний розмір файлу: 25MB'
                     )
-# //////////////////////
-#     --------Валідація mietype---------------
-#     @api.constrains('document_ids')
-#     def _check_documents(self):
-#         max_size = 25 * 1024 * 1024  # 25MB
-#         allowed_types = ['image/jpeg', 'image/png', 'image/svg', 'image/jpg','text/plain', 'application/pdf', 'application/doc', 'application/docx', 'application/xls', 'application/xlsx']
-#         for attachment in self.document_ids:
-#             if attachment.mimetype not in allowed_types:
-#                 raise ValidationError(
-#                     f'Файл "{attachment.name}" має недопустиме розширення. '
-#                     f'Дозволені формати: {", ".join(allowed_types)}'
-#                 )
-#             if attachment.file_size > max_size:
-#                  raise ValidationError(
-#                     f'Файл "{attachment.name}" завеликий. '
-#                     f'Максимальний розмір файлу: 25MB')man
 
 class StockPickingType(models.Model):
     _inherit = 'stock.picking.type'
@@ -66,3 +57,9 @@ class StockPickingType(models.Model):
             'res_model': 'receiving.wood',
             'view_mode': 'form',
         }
+
+
+class StockPickingLine(models.Model):
+    _inherit = 'stock.move.line'
+
+    partner_id = fields.Char(related='move_id.partner_id.name', store=True, related_sudo=False, readonly=False)
