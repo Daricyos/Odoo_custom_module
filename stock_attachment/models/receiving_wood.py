@@ -2,6 +2,8 @@ from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 import os
 
+
+
 class ReceivingWood(models.Model):
     _name = 'receiving.wood'
     _description = 'Receiving Wood'
@@ -20,6 +22,14 @@ class ReceivingWood(models.Model):
     product_quantity_t = fields.Float(compute='_compute_total_move_quantity', store=True, digits=(16, 3))
 
     document_ids = fields.Many2many('ir.attachment', string='Завантажити документи')
+    currency_id = fields.Many2one('res.currency', string="Валюта", required=True,)
+
+    total_price = fields.Monetary('Ціна', currency_field='currency_id', compute='_compute_total_price')
+
+    @api.depends('move_ids_without_package.price')
+    def _compute_total_price(self):
+        for obj in self:
+            obj.total_price = sum(obj.move_ids_without_package.mapped('price'))
 
     @api.depends('move_ids_without_package.quantity')
     def _compute_total_move_quantity(self):
@@ -101,6 +111,7 @@ class ReceivingWood(models.Model):
                     'product_uom_qty': move_line.quantity,
                     'quantity': move_line.quantity,
                     'name': move_line.product_id.name,
+                    'price_unit': move_line.price,
                     'product_uom': move_line.product_id.uom_id.id,
                     'description_picking': move_line.product_id.name,
                     'location_id': location_dest_stock_move.id,
@@ -130,6 +141,19 @@ class ReceivingWoodLine(models.Model):
         'receiving.wood', string="Receiving Wood", ondelete='cascade')
     product_id = fields.Many2one('product.product', string="Продукт")
     quantity = fields.Float(string="Кількість", digits=(16, 3))
+    currency_id = fields.Many2one(
+        'res.currency',
+        string="Валюта",
+        related='receiving_wood_id.currency_id',
+        store=True,
+        readonly=True
+    )
+    price = fields.Monetary(
+        string="Ціна",
+        # currency_field='currency_id',
+        compute='_compute_price',
+        store=True
+    )
 
     percentage = fields.Float(
         string="Процент (%)",
@@ -137,6 +161,12 @@ class ReceivingWoodLine(models.Model):
         store=True,
         digits=(16, 2)
     )
+
+    @api.depends('quantity')
+    def _compute_price(self):
+        for record in self:
+            price = record.product_id.lst_price if record.product_id else 0.0
+            record.price = price * record.quantity
 
     @api.depends('quantity', 'receiving_wood_id.product_quantity_t')
     def _compute_percentage(self):

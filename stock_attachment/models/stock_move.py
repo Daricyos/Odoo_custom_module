@@ -10,7 +10,6 @@ class StockMoveInherit(models.Model):
     @api.depends('raw_material_production_id.product_qty', 'actual_costs')
     def _compute_actual_yield_factor(self):
         for record in self:
-            print(record.raw_material_production_id.product_qty)
             if record.raw_material_production_id.product_qty > 0 and record.actual_costs != 0:
                 record.actual_yield_factor = (record.raw_material_production_id.product_qty / record.actual_costs) * 100
             else:

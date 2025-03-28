@@ -12,6 +12,24 @@
         parent="stock.menu_stock_root"
         action="dashboard_action"
         sequence="10"/>
-
     </data>
+
+    <record model="ir.ui.view" id="stock_valuation_layer_calendar">
+        <field name="name">stock.valuation.layer.calendar</field>
+        <field name="model">stock.valuation.layer</field>
+        <field name="priority" eval="2"/>
+        <field name="arch" type="xml">
+            <calendar string="Calendar View" date_start="create_date" color="product_id" event_limit="5" quick_create="0">
+                <field name="product_id" filters="1"/>
+                <field name="quantity"/>
+                <field name="value"/>
+            </calendar>
+        </field>
+    </record>
+
+
+    <record id="stock_account.stock_valuation_layer_action" model="ir.actions.act_window">
+        <field name="view_mode">tree,form,pivot,calendar</field>
+    </record>
+
 </odoo>
