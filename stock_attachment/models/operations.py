@@ -65,7 +65,7 @@ class ChopLogs(models.Model):
 
             location_dest_stock_move = self.env['stock.location'].search([
                 ('name', '=', 'Запаси'),
-                ('location_id.name', '=', 'СИРОВ')
+                ('location_id.name', '=', 'Запаси')
             ], limit=1)
             if not location_dest_stock_move:
                 raise ValidationError("Не знайдено локації 'СИРОВ/Запаси'.")
