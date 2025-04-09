@@ -75,7 +75,7 @@
                 </page>
             </notebook>
             <xpath expr="//field[@name='move_ids_without_package']/tree/field[@name='quantity']" position="after">
-                <field name="price_unit"/>
+                <field name="price_unit" string="Ціна"/>
             </xpath>
         </field>
     </record>
@@ -88,6 +88,9 @@
         <field name="arch" type="xml">
             <xpath expr="//tree" position="attributes">
                 <attribute name="default_order">date_done desc</attribute>
+            </xpath>
+            <xpath expr="//field[@name='picking_type_id']" position="after">
+                <field name="total_price"/>
             </xpath>
         </field>
     </record>
