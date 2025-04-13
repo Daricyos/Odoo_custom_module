@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <template xml:space="preserve">
     <t t-name="stock_attachment.StockAttachmentDashboard" owl="1">
+        <t t-call-assets="web.assets_backend" t-js="true">
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css"/>
+            <!-- Убедитесь, что этот стиль загружается -->
+        </t>
         <style>
             .bg-danger-row {
                 background-color: #f8d7da !important;
@@ -14,6 +18,11 @@
                             <div class="shadow-sm border m-2 p-4 bg-white">
                                 <div class="d-flex align-items-center justify-content-between">
                                     <h1 class="text-primary fw-bold">Дашборд</h1>
+                                    <div id="date_selection">
+                                        <input t-ref="datePicker" id="date-range-picker" type="text"
+                                               class="form-control" placeholder="Выберите диапазон дат"
+                                               readonly="readonly"/>
+                                    </div>
                                     <div>
                                         <select class="form-select" t-model="state.period"
                                         t-on-change="onChangePeriod">

@@ -21,7 +21,8 @@ Stock Picking Attachments
         'base',
         'stock',
         'sale',
-        'board'
+        'board',
+        'purchase_stock'
     ],
     'data': [
         'security/ir.model.access.csv',
