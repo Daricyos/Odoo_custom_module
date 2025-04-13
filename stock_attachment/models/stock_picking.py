@@ -8,10 +8,16 @@ import os
 class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
-    currency_id = fields.Many2one('res.currency', string="Валюта", required=True, )
+    currency_id = fields.Many2one('res.currency', string="Валюта",  default=lambda self: self._get_default_currency())
+
+    def _get_default_currency(self):
+        return self.env.context.get('default_currency_id') or self.env.company.currency_id.id
+
     total_price = fields.Monetary('Ціна', currency_field='currency_id', compute='_compute_total_price')
     document_ids = fields.Many2many('ir.attachment', string='Завантажити документи')
     product_quantity_t = fields.Float(compute='_compute_total_move_quantity', store=True, digits=(16, 3))
+
+
 
     @api.depends('move_ids_without_package.price_unit')
     def _compute_total_price(self):

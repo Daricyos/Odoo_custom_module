@@ -101,6 +101,7 @@ class ReceivingWood(models.Model):
                 'origin': record.invoice_number,
                 'location_dest_id': location_dest.id,
                 'document_ids': [(6, 0, record.document_ids.ids)],
+                'currency_id': record.currency_id.id
             }
             picking = stock_picking_obj.create(picking_vals)
 

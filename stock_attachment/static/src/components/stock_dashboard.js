@@ -11,7 +11,12 @@ export class StockAttachmentDashboard extends Component {
     //Вироблено чураку
     async getChurakuProduced(){
         let domain = [['state', 'in', ['done']], ['product_id', '=', this.state.wareChurakuId]]
-        if (this.state.period > 0){
+        if (this.state.dateStart && this.state.dateEnd) {
+            domain.push(
+                ['date_finished', '>=', this.state.dateStart],
+                ['date_finished', '<=', this.state.dateEnd]
+            )
+        } else if (this.state.period > 0){
             domain.push(
                 ['date_finished', '>', this.state.current_date]
             )
@@ -40,7 +45,12 @@ export class StockAttachmentDashboard extends Component {
     // Прихід деревини по сортах
     async getArrivalWoodGrade(){
         let domain = [['picking_id.state', 'in', ['done']], ['picking_id.picking_type_id', '=', this.state.pickingTypeId]]
-        if (this.state.period > 0){
+        if (this.state.dateStart && this.state.dateEnd) {
+            domain.push(
+                ['picking_id.date_done', '>=', this.state.dateStart],
+                ['picking_id.date_done', '<=', this.state.dateEnd]
+            )
+        } else if (this.state.period > 0){
             domain.push(
                 ['picking_id.date_done', '>', this.state.current_date]
             )
@@ -74,12 +84,16 @@ export class StockAttachmentDashboard extends Component {
                 percentage:6,
             },
             period:90,
+            dateStart: null,
+            dateEnd: null,
         })
         this.orm = useService("orm")
         this.actionService = useService("action")
+        this.datePickerRef = useRef("datePicker")
 
         onWillStart(async ()=>{
             await loadJS("https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js")
+            loadJS("https://cdn.jsdelivr.net/npm/litepicker/dist/litepicker.js")
             this.getDates()
             await this.qetQuotations()
             await this.qetManufactured()
@@ -88,9 +102,44 @@ export class StockAttachmentDashboard extends Component {
             await this.getChurakuProduced()
             await this.getArrivalWoodGrade()
         })
+
+        onMounted(() => {
+            this.initializeDatePicker()
+        })
+    }
+
+    initializeDatePicker() {
+        if (typeof Litepicker === 'undefined') {
+            console.error('Litepicker не загружен!');
+            return;
+        }
+        const picker = new Litepicker({
+            element: this.datePickerRef.el,
+            singleMode: false,
+            format: 'YYYY-MM-DD',
+            lang: 'ru',
+            setup: (picker) => {
+                picker.on('selected', (date1, date2) => {
+                    this.state.dateStart = moment(date1.dateInstance).format('YYYY-MM-DD')
+                    this.state.dateEnd = moment(date2.dateInstance).format('YYYY-MM-DD')
+                    this.onChangeDateRange()
+                })
+            }
+        })
+    }
+
+    // Обработка изменения диапазона дат
+    async onChangeDateRange() {
+        await this.qetQuotations()
+        await this.qetManufactured()
+        await this.getRecyclingRates()
+        await this.getChurakuProduced()
+        await this.getArrivalWoodGrade()
     }
 
     async onChangePeriod(){
+        this.state.dateStart = null
+        this.state.dateEnd = null
         this.getDates()
         await this.qetQuotations()
         await this.qetManufactured()
@@ -129,7 +178,12 @@ export class StockAttachmentDashboard extends Component {
         this.state.pickingTypeId = pickingTypeId;
 
         let domain = [['state', 'in', ['done']], ['picking_type_id', '=', pickingTypeId]]
-        if (this.state.period > 0){
+        if (this.state.dateStart && this.state.dateEnd) {
+            domain.push(
+                ['date_done', '>=', this.state.dateStart],
+                ['date_done', '<=', this.state.dateEnd]
+            )
+        } else if (this.state.period > 0){
             domain.push(
                 ['date_done', '>', this.state.current_date]
             )
@@ -170,7 +224,12 @@ export class StockAttachmentDashboard extends Component {
 
 
         let domain = [['state', 'in', ['done']], ['product_id', '=', wareChurakuId]]
-        if (this.state.period > 0){
+        if (this.state.dateStart && this.state.dateEnd) {
+            domain.push(
+                ['date_finished', '>=', this.state.dateStart],
+                ['date_finished', '<=', this.state.dateEnd]
+            )
+        } else if (this.state.period > 0){
             domain.push(
                 ['date_finished', '>', this.state.current_date]
             )
