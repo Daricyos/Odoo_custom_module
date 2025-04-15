@@ -1,5 +1,4 @@
 from odoo import api, fields, models
-from odoo.exceptions import ValidationError
 
 
 class StockMoveInherit(models.Model):
@@ -16,11 +15,6 @@ class StockMoveInherit(models.Model):
             else:
                 record.actual_yield_factor = 0
 
-    @api.constrains('actual_costs')
-    def _check_actual_costs(self):
-        for record in self:
-            if not record.actual_costs or record.actual_costs <= 0:
-                raise ValidationError("Поле 'Фактичні витрати' є обов'язковим і має бути більше нуля.")
 
     @api.onchange('actual_costs')
     def _onchange_actual_costs(self):
