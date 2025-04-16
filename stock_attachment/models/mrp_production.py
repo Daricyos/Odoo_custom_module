@@ -1,4 +1,5 @@
-from odoo import api, fields, models
+from odoo import api, fields, models, _
+from odoo.exceptions import ValidationError
 
 
 class MrpProduction(models.Model):
@@ -28,6 +29,16 @@ class MrpProduction(models.Model):
     recycling_rates_config = fields.Float(
         store=True
     )
+
+    @api.model
+    def create(self, vals):
+        production = super(MrpProduction, self).create(vals)
+
+        for move in production.move_raw_ids:
+            if move.actual_costs is None or move.actual_costs <= 0:
+                raise ValidationError(_("Поле 'Фактичні витрати' є обов'язковим і має бути більше нуля."))
+
+        return production
 
     @api.depends('move_raw_ids.actual_costs', 'product_qty')
     def _compute_by_product_qty(self):
