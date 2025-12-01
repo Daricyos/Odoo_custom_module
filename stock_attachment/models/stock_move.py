@@ -16,7 +16,7 @@ class StockMoveInherit(models.Model):
                 record.actual_yield_factor = 0
 
 
-    @api.onchange('actual_costs')
-    def _onchange_actual_costs(self):
-        if self.actual_costs:
-            self.product_uom_qty = self.actual_costs
+    # @api.onchange('actual_costs')
+    # def _onchange_actual_costs(self):
+    #     if self.actual_costs:
+    #         self.product_uom_qty = self.actual_costs
