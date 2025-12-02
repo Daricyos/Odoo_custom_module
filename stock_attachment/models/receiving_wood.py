@@ -149,6 +149,8 @@ class ReceivingWoodLine(models.Model):
         store=True,
         readonly=True
     )
+    price_unit = fields.Monetary(string='Ціна за одиницю')
+
     price = fields.Monetary(
         string="Ціна",
         # currency_field='currency_id',
@@ -163,11 +165,11 @@ class ReceivingWoodLine(models.Model):
         digits=(16, 2)
     )
 
-    @api.depends('quantity')
+    @api.depends('quantity','price_unit')
     def _compute_price(self):
         for record in self:
-            price = record.product_id.lst_price if record.product_id else 0.0
-            record.price = price * record.quantity
+            # price = record.product_id.lst_price if record.product_id else 0.0
+            record.price = record.price_unit * record.quantity
 
     @api.depends('quantity', 'receiving_wood_id.product_quantity_t')
     def _compute_percentage(self):
