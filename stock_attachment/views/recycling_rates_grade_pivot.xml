@@ -12,7 +12,8 @@
             </xpath>
             <xpath expr="//field[@name='move_raw_ids']/tree/field[@name='product_uom_qty']" position="after">
                 <field name="actual_costs"/>
-                <field name="actual_yield_factor"/>
+<!--                <field name="actual_yield_factor"/>-->
+                <field name="actual_yield_factor" widget="percentage"/>
             </xpath>
             <xpath expr="//field[@name='move_raw_ids']/tree" position="attributes">
                 <attribute name="decoration-danger">actual_costs > product_uom_qty</attribute>
