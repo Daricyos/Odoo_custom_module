@@ -1,5 +1,5 @@
 from odoo import models, fields, api
-from odoo.exceptions import ValidationError
+from odoo.exceptions import ValidationError, UserError
 import os
 
 
@@ -7,24 +7,88 @@ import os
 class ReceivingWood(models.Model):
     _name = 'receiving.wood'
     _description = 'Receiving Wood'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
+    _order = 'create_date desc, id desc'
 
+
+    name = fields.Char(string='Назва', default='Без назви', compute='_compute_name', store=True)
+    state = fields.Selection(
+        string='Статус',
+        selection=[
+            ('draft', 'Чернетка'),
+            ('done','Прийнято')
+        ],
+        default='draft',
+        tracking=True
+    )
     partner_id = fields.Many2one(
         'res.partner',
         'Отримати з',
         required=True,
-        domain="[('category_id.name', '=', 'Постачальник')]"
+        domain="[('category_id.name', '=', 'Постачальник')]",
+        tracking=True
     )
-    invoice_number = fields.Integer('Номер накладної', required=True)
+    stock_picking_id = fields.Many2one(
+        'stock.picking',
+        string='Переміщення',
+        tracking=True
+    )
+
+    invoice_number = fields.Integer(
+        'Номер накладної',
+        required=True,
+        tracking=True
+    )
 
     move_ids_without_package = fields.One2many(
-        'receiving.wood.line', 'receiving_wood_id', string="Stock move")
+        'receiving.wood.line',
+        'receiving_wood_id',
+        string="Stock move"
+    )
 
-    product_quantity_t = fields.Float(compute='_compute_total_move_quantity', store=True, digits=(16, 3))
+    product_quantity_t = fields.Float(
+        compute='_compute_total_move_quantity',
+        string='Загальна м³',
+        store=True,
+        digits=(16, 3),
+        tracking=True
+    )
 
-    document_ids = fields.Many2many('ir.attachment', string='Завантажити документи')
-    currency_id = fields.Many2one('res.currency', string="Валюта", required=True,)
+    document_ids = fields.Many2many(
+        'ir.attachment',
+        string='Завантажити документи',
+        tracking=True
+    )
+    currency_id = fields.Many2one(
+        'res.currency',
+        string="Валюта",
+        required=True,
+        tracking=True
+    )
 
-    total_price = fields.Monetary('Ціна', currency_field='currency_id', compute='_compute_total_price')
+    total_price = fields.Monetary(
+        'Ціна',
+        currency_field='currency_id',
+        compute='_compute_total_price',
+        stor=True,
+        tracking=True
+    )
+
+    @api.depends('partner_id', 'create_date')
+    def _compute_name(self):
+        for rec in self:
+            if rec.partner_id:
+                # # Форматуємо як "ДД.ММ.РРРР ГГ:ХХ"
+                # date_str = rec.create_date.strftime('%d.%m.%Y %H:%M') if rec.create_date else ''
+                # rec.name = f'{rec.partner_id.name}/{date_str}'
+                if rec.create_date:
+                    local_date = fields.Datetime.context_timestamp(rec, rec.create_date)
+                    date_str = local_date.strftime('%d.%m.%Y %H:%M')
+                else:
+                    date_str = ''
+                rec.name = f'{rec.partner_id.name}/{date_str}'
+            else:
+                rec.name = 'Без назви'
 
     @api.depends('move_ids_without_package.price')
     def _compute_total_price(self):
@@ -122,6 +186,10 @@ class ReceivingWood(models.Model):
 
             picking.button_validate()
 
+            if picking:
+                record.stock_picking_id = picking.id
+                record.state = 'done'
+
             return {
                 'type': 'ir.actions.act_window',
                 'name': 'Надходження',
@@ -132,6 +200,22 @@ class ReceivingWood(models.Model):
             }
 
         return True
+
+    def action_view_picking(self):
+        """
+        Smart button для перегляду надходження
+        """
+        self.ensure_one()
+        if self.stock_picking_id:
+            return {
+                'type': 'ir.actions.act_window',
+                'res_model': 'stock.picking',
+                'res_id': self.stock_picking_id.id,
+                'view_mode': 'form',
+                'target': 'current',
+            }
+        else:
+            raise UserError('Немає надходження.')
 
 
 class ReceivingWoodLine(models.Model):
@@ -149,6 +233,8 @@ class ReceivingWoodLine(models.Model):
         store=True,
         readonly=True
     )
+    price_unit = fields.Monetary(string='Ціна за одиницю')
+
     price = fields.Monetary(
         string="Ціна",
         # currency_field='currency_id',
@@ -163,11 +249,11 @@ class ReceivingWoodLine(models.Model):
         digits=(16, 2)
     )
 
-    @api.depends('quantity')
+    @api.depends('quantity','price_unit')
     def _compute_price(self):
         for record in self:
-            price = record.product_id.lst_price if record.product_id else 0.0
-            record.price = price * record.quantity
+            # price = record.product_id.lst_price if record.product_id else 0.0
+            record.price = record.price_unit * record.quantity
 
     @api.depends('quantity', 'receiving_wood_id.product_quantity_t')
     def _compute_percentage(self):

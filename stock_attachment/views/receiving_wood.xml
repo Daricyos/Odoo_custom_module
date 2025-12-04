@@ -5,19 +5,120 @@
         <field name="arch" type="xml">
             <form>
                 <header>
-                    <button name="action_create_operations" display="always" type="object" string="Приняти" />
+                    <button name="action_create_operations"
+                            class="btn-primary"
+                            display="always"
+                            type="object"
+                            invisible="stock_picking_id"
+                            string="Приняти" />
+                    <field name="state" widget="statusbar"/>
                 </header>
-                <group>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_picking"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-truck"
+                                string="Переміщення"
+                                invisible="not stock_picking_id">
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only" />
+                        <h1><field clss="text-break" options="{'line_breaks': False}" widget="text" name="name"/></h1>
+                    </div>
                     <group>
-                        <field name="partner_id"/>
-                    </group>
-                    <group>
-                        <field name="invoice_number"/>
-                        <field name="currency_id"/>
-                    </group>
-                    <group string="Завантаження докуентів">
                         <group>
-                            <field name="document_ids" nolabel="1" colspan="5">
+                            <field name="stock_picking_id" invisible="1"/>
+                            <field name="partner_id"/>
+                            <field name="create_date" string="Дата створення"/>
+                        </group>
+                        <group>
+                            <field name="invoice_number"/>
+                            <field name="currency_id"/>
+                        </group>
+<!--                        <group string="Завантаження документів">-->
+<!--                            <group>-->
+<!--                                <field name="document_ids" nolabel="1" colspan="5">-->
+<!--                                    <tree>-->
+<!--                                        <field name="name"/>-->
+<!--                                        <field name="create_date" widget="date"/>-->
+<!--                                        <field name="write_date" widget="date"/>-->
+<!--                                        <field name="mimetype"/>-->
+<!--                                        <field name="datas" widget="image" options="{'size': [100, 100]}"-->
+<!--                                                invisible="mimetype not in ['image/jpeg', 'image/png', 'image/gif', 'image/webp']" />-->
+
+<!--                                            &lt;!&ndash; Нова кнопка завантаження &ndash;&gt;-->
+<!--                                        <button string="Скачати"-->
+<!--                                                type="object"-->
+<!--                                                name="action_download_file"-->
+<!--                                                icon="fa-download"-->
+<!--                                                class="oe_button btn btn-outline-primary"/>-->
+
+<!--                                         &lt;!&ndash; Нова кнопка для прев'ю &ndash;&gt;-->
+<!--                                        <button string="Переглянути"-->
+<!--                                                type="object"-->
+<!--                                                name="action_preview_image"-->
+<!--                                                icon="fa-eye"-->
+<!--                                                class="oe_button btn btn-outline-primary mt-3"-->
+<!--                                                attrs="{'invisible': [('mimetype', 'not like', 'image/')]}"-->
+<!--                                                invisible="mimetype not in ['image/jpeg', 'image/png', 'image/gif', 'image/webp']"/>-->
+<!--                                    </tree>-->
+<!--                                </field>-->
+<!--                            </group>-->
+<!--                            <style>-->
+<!--                                .hide-uploaded-files .o_attachments,.ui-sortable .o_field_x2many_list_row_add a {-->
+<!--                                    display: none;-->
+<!--                                }-->
+<!--                                p{-->
+<!--                                    text-wrap: nowrap;-->
+<!--                                }-->
+<!--                                .o_list_button{-->
+<!--                                    display: flex;-->
+<!--                                    flex-direction: column;-->
+<!--                                    width:140px;-->
+<!--                                    height:100%;-->
+<!--                                }-->
+<!--                            </style>-->
+<!--                        </group>-->
+<!--                    </group>-->
+<!--                    <group>-->
+<!--                         <field name="document_ids" widget="many2many_binary" nolabel="1" class="hide-uploaded-files" mode="upload"-->
+<!--                               options="{'accepted_file_extensions': '.pdf, .doc, .docx, .xls, .xlsx,.txt, .jpg, .jpeg, .png, .svg'}"/>-->
+<!--                        <div>-->
+<!--                            <p>-->
+<!--                                Дозволені формати файлів: PDF, DOC, DOCX, XLS, XLSX, TXT, SVG, JPG, JPEG, PNG.-->
+<!--                            </p>-->
+<!--                            <p>-->
+<!--                                Максимальний розмір: 25MB-->
+<!--                            </p>-->
+<!--                        </div>-->
+                    </group>
+                    <notebook>
+                        <page string="Операції" name="operations">
+                            <field name="move_ids_without_package" widget="One2many_tags">
+                                <tree editable="1">
+                                    <field name="product_id"/>
+                                    <field name="price_unit"/>
+                                    <field name="quantity">
+                                        <attribute name="options">
+                                            {"unit": "m³"}
+                                        </attribute>
+                                    </field>
+                                    <field name="price"/>
+                                    <field name="currency_id"/>
+                                    <field name="percentage"/>
+                                </tree>
+                            </field>
+                            <group name="note_group" col="6" class="mt-2 mt-md-0">
+                                <group class="oe_subtotal_footer" colspan="2" name="sale_total">
+                                    <field name="product_quantity_t"  string="Загальна м³" colspan="2" readonly="1"/>
+                                    <field name="total_price"  string="Загальна Ціна" colspan="2" readonly="1"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Завантаження документів">
+                            <field name="document_ids">
                                 <tree>
                                     <field name="name"/>
                                     <field name="create_date" widget="date"/>
@@ -43,59 +144,95 @@
                                             invisible="mimetype not in ['image/jpeg', 'image/png', 'image/gif', 'image/webp']"/>
                                 </tree>
                             </field>
-                        </group>
-                        <style>
-                            .hide-uploaded-files .o_attachments,.ui-sortable .o_field_x2many_list_row_add a {
-                                display: none;
-                            }
-                            p{
-                                text-wrap: nowrap;
-                            }
-                            .o_list_button{
-                                display: flex;
-                                flex-direction: column;
-                                width:140px;
-                                height:100%;
-                            }
-                        </style>
-                    </group>
-                </group>
-                <group>
-                     <field name="document_ids" widget="many2many_binary" nolabel="1" class="hide-uploaded-files" mode="upload"
-                           options="{'accepted_file_extensions': '.pdf, .doc, .docx, .xls, .xlsx,.txt, .jpg, .jpeg, .png, .svg'}"/>
-                    <div>
-                        <p>
-                            Дозволені формати файлів: PDF, DOC, DOCX, XLS, XLSX, TXT, SVG, JPG, JPEG, PNG.
-                        </p>
-                        <p>
-                            Максимальний розмір: 25MB
-                        </p>
-                    </div>
-                </group>
-                <notebook>
-                    <page string="Operations" name="operations">
-                        <field name="move_ids_without_package" widget="One2many_tags">
-                            <tree editable="1">
-                                <field name="product_id"/>
-                                <field name="quantity">
-                                    <attribute name="options">
-                                        {"unit": "m³"}
-                                    </attribute>
-                                </field>
-                                <field name="price"/>
-                                <field name="currency_id"/>
-                                <field name="percentage"/>
-                            </tree>
-                        </field>
-                        <group name="note_group" col="6" class="mt-2 mt-md-0">
-                            <group class="oe_subtotal_footer" colspan="2" name="sale_total">
-                                <field name="product_quantity_t"  string="Загальна м³" colspan="2" readonly="1"/>
-                                <field name="total_price"  string="Загальна Ціна" colspan="2" readonly="1"/>
-                            </group>
-                        </group>
-                    </page>
-                </notebook>
+                            <style>
+                                .hide-uploaded-files .o_attachments,.ui-sortable .o_field_x2many_list_row_add a {
+                                    display: none;
+                                }
+                                p{
+                                    text-wrap: nowrap;
+                                }
+                                .o_list_button{
+                                    display: flex;
+                                    flex-direction: column;
+                                    width:140px;
+                                    height:100%;
+                                }
+                            </style>
+                            <field name="document_ids" widget="many2many_binary" nolabel="1" class="hide-uploaded-files" mode="upload"
+                                   options="{'accepted_file_extensions': '.pdf, .doc, .docx, .xls, .xlsx,.txt, .jpg, .jpeg, .png, .svg'}"/>
+                            <div>
+                                <p>
+                                    Дозволені формати файлів: PDF, DOC, DOCX, XLS, XLSX, TXT, SVG, JPG, JPEG, PNG.
+                                </p>
+                                <p>
+                                    Максимальний розмір: 25MB
+                                </p>
+                            </div>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
             </form>
         </field>
     </record>
+
+    <record id="view_receiving_wood_tree" model="ir.ui.view">
+        <field name="name">receiving.wood.tree</field>
+        <field name="model">receiving.wood</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="state"
+                       widget="badge"
+                       decoration-muted="state == 'draft' "
+                       decoration-success="state == 'done'"/>
+                <field name="invoice_number"/>
+                <field name="currency_id"/>
+                <field name="create_date" string="Дата створення"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="receiving_wood_search" model="ir.ui.view">
+        <field name="name">receiving.wood.search</field>
+        <field name="model">receiving.wood</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="partner_id"/>
+
+                <filter string="Чернетка" name="filter_draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="Прийнято" name="filter_done" domain="[('state', '=', 'done')]"/>
+                <separator/>
+                    <filter name="filter_today" string="Сьогодні"
+                            domain="[('create_date', '&gt;=', datetime.datetime.combine(context_today(), datetime.time(0,0,0)))]"/>
+                    <filter name="filter_create_date" string="Створено" date="create_date"/>
+
+                <group>
+                    <filter string="Отримати з" name="group_partner_id" domain="[]" context="{'group_by':'partner_id'}"/>
+                    <filter string="Статус" name="group_state" domain="[]" context="{'group_by':'state'}"/>
+                    <separator/>
+                    <filter string="Створено" name="group_create_date" domain="[]" context="{'group_by':'create_date'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_receiving_wood" model="ir.actions.act_window">
+        <field name="name">Надходження деревини</field>
+        <field name="res_model">receiving.wood</field>
+        <field name="view_mode">tree,form,search</field>
+    </record>
+
+    <menuitem
+        id="menu_receiving_wood"
+        name="Надходження деревини"
+        parent="stock.menu_stock_root"
+        action="action_receiving_wood"
+        sequence="-1"/>
 </odoo>
