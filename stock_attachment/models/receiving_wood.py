@@ -78,8 +78,14 @@ class ReceivingWood(models.Model):
     def _compute_name(self):
         for rec in self:
             if rec.partner_id:
-                # Форматуємо як "ДД.ММ.РРРР ГГ:ХХ"
-                date_str = rec.create_date.strftime('%d.%m.%Y %H:%M') if rec.create_date else ''
+                # # Форматуємо як "ДД.ММ.РРРР ГГ:ХХ"
+                # date_str = rec.create_date.strftime('%d.%m.%Y %H:%M') if rec.create_date else ''
+                # rec.name = f'{rec.partner_id.name}/{date_str}'
+                if rec.create_date:
+                    local_date = fields.Datetime.context_timestamp(rec, rec.create_date)
+                    date_str = local_date.strftime('%d.%m.%Y %H:%M')
+                else:
+                    date_str = ''
                 rec.name = f'{rec.partner_id.name}/{date_str}'
             else:
                 rec.name = 'Без назви'
