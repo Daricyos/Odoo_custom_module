@@ -5,12 +5,7 @@ from odoo.exceptions import ValidationError
 class MrpProduction(models.Model):
     _inherit = 'mrp.production'
 
-    # move_byproduct_ids = fields.One2many(
-    #     'stock.move',
-    #     compute='_compute_move_byproduct_ids',
-    #     inverse='_set_move_byproduct_ids',
-    #     store=True
-    # )
+
     total_raw_material_qty = fields.Float(
         string="Использовано сырья (м³)",
         compute="_compute_total_raw_material_qty",
@@ -92,18 +87,4 @@ class MrpProduction(models.Model):
             else:
                 rec.waste_ratio = 0.0
 
-    # @api.depends('move_byproduct_ids.actual_costs','move_raw_ids.product_uom_qty')
-    # def _compute_waste_ratio(self):
-    #     for rec in self:
-    #         if rec.move_byproduct_ids and rec.move_raw_ids:
-    #             # actual_costs = sum(prod.actual_costs for prod in rec.move_byproduct_ids)
-    #             actual_costs = sum(rec.move_byproduct_ids.mapped('actual_costs'))
-    #             # product_uom_qty = sum(raw.product_uom_qty for raw in rec.move_raw_ids)
-    #             product_uom_qty = sum(rec.move_raw_ids.mapped('product_uom_qty'))
-    #             if actual_costs > 0.0 and product_uom_qty > 0.0:
-    #                 rec.waste_ratio = product_uom_qty / actual_costs
-    #             else:
-    #                 rec.waste_ratio = 0.0
-    #         else:
-    #             rec.waste_ratio = 0.0
 

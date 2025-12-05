@@ -31,9 +31,11 @@
                         <group>
                             <field name="stock_picking_id" invisible="1"/>
                             <field name="partner_id"/>
-                            <field name="create_date" string="Дата створення"/>
+                            <field name="driver_license_number"/>
+                            <field name="vehicle_number"/>
                         </group>
                         <group>
+                            <field name="create_date" string="Дата створення"/>
                             <field name="invoice_number"/>
                             <field name="currency_id"/>
                         </group>

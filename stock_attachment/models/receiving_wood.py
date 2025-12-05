@@ -28,6 +28,16 @@ class ReceivingWood(models.Model):
         domain="[('category_id.name', '=', 'Постачальник')]",
         tracking=True
     )
+    driver_license_number = fields.Char(
+        string="Номер водійського посвідчення",
+        compute='_compute_driver_info',
+        store=True
+    )
+    vehicle_number = fields.Char(
+        string="Транспортный засіб (номер)",
+        compute='_compute_driver_info',
+        store=True
+    )
     stock_picking_id = fields.Many2one(
         'stock.picking',
         string='Переміщення',
@@ -73,6 +83,16 @@ class ReceivingWood(models.Model):
         stor=True,
         tracking=True
     )
+
+    @api.depends('partner_id')
+    def _compute_driver_info(self):
+        for rec in self:
+            if rec.partner_id:
+                rec.driver_license_number = rec.partner_id.driver_license_number
+                rec.vehicle_number = rec.partner_id.vehicle_number
+            else:
+                rec.driver_license_number = ''
+                rec.vehicle_number = ''
 
     @api.depends('partner_id', 'create_date')
     def _compute_name(self):
