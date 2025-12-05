@@ -8,6 +8,10 @@
             <xpath expr="//field[@name='origin']" position="after">
                 <field name="currency_id"/>
             </xpath>
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="driver_license_number"/>
+                <field name="vehicle_number"/>
+            </xpath>
             <xpath expr="//field[@name='move_ids_without_package']" position="after">
                 <group name="note_group" col="6" class="mt-2 mt-md-0">
                     <group class="oe_subtotal_footer" colspan="2" name="sale_total">

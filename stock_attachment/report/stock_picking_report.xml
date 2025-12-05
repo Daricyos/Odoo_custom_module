@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="report_delivery_document_inherit_driver_info"
+              inherit_id="stock.report_delivery_document"
+              name="Delivery Slip with Driver Info">
+
+        <!-- Додаємо після блоку з партнером -->
+        <xpath expr="//div[@name='div_incoming_address']/div[@name='partner_header']" position="after">
+            <strong>Водій:</strong>
+            <span t-esc="o.partner_id.name or '-'"/>
+            <br/>
+            <strong>Водійське посвідчення №:</strong>
+            <span t-esc="o.driver_license_number or '-'"/>
+            <br/>
+            <strong>Транспортний засіб №:</strong>
+            <span t-esc="o.vehicle_number or '-'"/>
+        </xpath>
+
+    </template>
+</odoo>
