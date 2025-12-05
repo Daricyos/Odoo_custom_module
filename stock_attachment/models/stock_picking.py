@@ -41,7 +41,8 @@ class StockPicking(models.Model):
     @api.depends('move_ids_without_package.price_unit')
     def _compute_total_price(self):
         for obj in self:
-            obj.total_price = sum(obj.move_ids_without_package.mapped('price_unit'))
+            # obj.total_price = sum(obj.move_ids_without_package.mapped('price_unit'))
+            obj.total_price = sum(move.price_unit * move.quantity for move in obj.move_ids_without_package)
 
     @api.depends('move_ids_without_package.product_uom_qty')
     def _compute_total_move_quantity(self):
@@ -78,7 +79,7 @@ class StockPickingType(models.Model):
     def action_receiving_wood(self):
         return {
             'type': 'ir.actions.act_window',
-            'name': 'Надходження деревени',
+            'name': 'Надходження деревини',
             'res_model': 'receiving.wood',
             'view_mode': 'form',
         }
