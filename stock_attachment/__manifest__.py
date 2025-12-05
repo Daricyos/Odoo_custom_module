@@ -43,6 +43,8 @@ Stock Picking Attachments
         'views/stock_dashboard.xml',
         'views/stock_menu.xml',
         'views/mrp_menue.xml',
+        'views/purchase_order_views.xml',
+        'report/stock_picking_report.xml',
     ],
 
     'images': ['static/description/icon.svg'],

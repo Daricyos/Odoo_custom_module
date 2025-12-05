@@ -8,6 +8,16 @@ import os
 class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
+    driver_license_number = fields.Char(
+        string="Номер водійського посвідчення",
+        compute='_compute_driver_info',
+        store=True
+    )
+    vehicle_number = fields.Char(
+        string="Транспортный засіб (номер)",
+        compute='_compute_driver_info',
+        store=True
+    )
     currency_id = fields.Many2one('res.currency', string="Валюта",  default=lambda self: self._get_default_currency())
 
     def _get_default_currency(self):
@@ -17,6 +27,15 @@ class StockPicking(models.Model):
     document_ids = fields.Many2many('ir.attachment', string='Завантажити документи')
     product_quantity_t = fields.Float(compute='_compute_total_move_quantity', store=True, digits=(16, 3))
 
+    @api.depends('partner_id')
+    def _compute_driver_info(self):
+        for rec in self:
+            if rec.partner_id:
+                rec.driver_license_number = rec.partner_id.driver_license_number
+                rec.vehicle_number = rec.partner_id.vehicle_number
+            else:
+                rec.driver_license_number = ''
+                rec.vehicle_number = ''
 
 
     @api.depends('move_ids_without_package.price_unit')
