@@ -28,6 +28,7 @@
             id="menu_operations_main"
             name="Складські операції"
             parent="stock.menu_stock_root"
+            groups="group_menu_stock_operations"
             sequence="100"/>
 
     <menuitem

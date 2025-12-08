@@ -24,8 +24,8 @@
                 </header>
                 <group>
                     <group>
-                        <field name="partner_id" readonly="1"/>
-                        <field name="warehouse_to_id" readonly="1"/>
+                        <field name="partner_id" readonly="0"/>
+                        <field name="warehouse_to_id" readonly="0"/>
                     </group>
                     <group>
                         <field name="invoice_number"/>
@@ -129,8 +129,8 @@
                 </header>
                 <group>
                     <group>
-                        <field name="partner_id" readonly="1"/>
-                        <field name="warehouse_to_id" readonly="1"/>
+                        <field name="partner_id" readonly="0"/>
+                        <field name="warehouse_to_id" readonly="0"/>
                     </group>
                     <group>
                         <field name="invoice_number"/>
@@ -243,8 +243,8 @@
                     </header>
                     <group>
                         <group>
-                            <field name="partner_id" readonly="1"/>
-                            <field name="warehouse_to_id" readonly="1"/>
+                            <field name="partner_id" readonly="0"/>
+                            <field name="warehouse_to_id" readonly="0"/>
                         </group>
                         <group>
                             <field name="name"/>
@@ -348,8 +348,8 @@
                     </header>
                     <group>
                         <group>
-                            <field name="partner_id" readonly="1"/>
-                            <field name="warehouse_to_id" readonly="1"/>
+                            <field name="partner_id" readonly="0"/>
+                            <field name="warehouse_to_id" readonly="0"/>
                         </group>
                         <group>
                             <field name="invoice_number"/>
@@ -453,8 +453,8 @@
                 </header>
                 <group>
                     <group>
-                        <field name="partner_id" readonly="1"/>
-                        <field name="warehouse_to_id" readonly="1"/>
+                        <field name="partner_id" readonly="0"/>
+                        <field name="warehouse_to_id" readonly="0"/>
                     </group>
                     <group>
                         <field name="invoice_number"/>

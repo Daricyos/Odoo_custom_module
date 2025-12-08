@@ -24,33 +24,33 @@
                        <tbody>
                             <t t-foreach="state.tableData" t-as="row" t-key="row.sort">
                                 <tr>
-                                    <td><t t-esc="row.sort" /></td>
-                                    <td><t t-esc="row.quantity" /></td>
-                                    <td><t t-esc="row.incomingToday" /></td>
-                                    <td><t t-esc="row.inProduction" /></td>
+                                    <td><t t-esc="row.sort"/></td>
+                                    <td><t t-esc="row.quantity or 0" /></td>
+                                    <td><t t-esc="row.incomingToday or 0" /></td>
+                                    <td><t t-esc="row.inProduction or 0" /></td>
                                 </tr>
                             </t>
                        </tbody>
                     </table>
                 </div>
-                <div class="col-12 mt-2">
-                    <div class="p-3 scroll-container" style="background-color: white; color: black; font-size: 18px;">
-                        <span>Динаміка приходу (м³)</span>
-                    </div>
-                </div>
+<!--                <div class="col-12 mt-2">-->
+<!--                    <div class="p-3 scroll-container" style="background-color: white; color: black; font-size: 18px;">-->
+<!--                        <span>Динаміка приходу (м³)</span>-->
+<!--                    </div>-->
+<!--                </div>-->
             </div>
-            <div class="row mt-3">
-                <div class="col-12">
-                    <h3 class="balance-title">Баланс по камерах сушки</h3>
-                </div>
-            </div>
-            <div class="row mt-3">
-                <t t-foreach="state.cameraData" t-as="camera" t-key="camera.name">
-                    <div class="col-2">
-                        <Camera name="camera.name" volume="camera.volume" loadingStatus="camera.loadingStatus" />
-                    </div>
-                </t>
-            </div>
+<!--            <div class="row mt-3">-->
+<!--                <div class="col-12">-->
+<!--                    <h3 class="balance-title">Баланс по камерах сушки</h3>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="row mt-3">-->
+<!--                <t t-foreach="state.cameraData" t-as="camera" t-key="camera.name">-->
+<!--                    <div class="col-2">-->
+<!--                        <Camera name="camera.name" volume="camera.volume" loadingStatus="camera.loadingStatus" />-->
+<!--                    </div>-->
+<!--                </t>-->
+<!--            </div>-->
         </div>
     </t>
 </templates>

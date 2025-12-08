@@ -9,7 +9,6 @@
         <field name="category_id" ref="stock_attachment.stock_attachment_category_management"/>
     </record>
 
-
     <record id="group_head_production" model="res.groups">
         <field name="name">Начальник виробництва</field>
         <field name="category_id" ref="stock_attachment.stock_attachment_category_management"/>
@@ -29,5 +28,11 @@
         <field name="implied_ids" eval="[(4, ref('group_wood_receiver'))]"/>
         <field name="implied_ids" eval="[(4, ref('group_director'))]"/>
         <field name="implied_ids" eval="[(4, ref('group_head_production'))]"/>
+    </record>
+
+
+    <record id="group_menu_stock_operations" model="res.groups">
+        <field name="name">Меню складські операції</field>
+<!--        <field name="category_id" ref="stock_attachment.stock_attachment_category_management"/>-->
     </record>
 </odoo>
