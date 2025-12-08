@@ -279,15 +279,13 @@ class BlocksDrying(models.Model):
         'stock.warehouse',  # Модель складів в Odoo
         string='Отримати з',  # Назва поля
         required=True,  # Опційно: зробити обов'язковим
-        default=lambda self: self.env['stock.warehouse'].search([('name', 'in',
-                ['Прийом сировини'])], limit=1) # Опційно: default перший склад
+        default=lambda self: self.env['stock.warehouse'].search([('name', 'ilike','Прийом сировини')], limit=1) # Опційно: default перший склад
     )
     warehouse_to_id = fields.Many2one(
         'stock.warehouse',  # Модель складів в Odoo
         string='Відправити в',  # Назва поля
         required=True,  # Опційно: зробити обов'язковим
-        default=lambda self: self.env['stock.warehouse'].search([('name', 'in',
-                ['Біржа-1'])], limit=1) # Опційно: default перший склад
+        default=lambda self: self.env['stock.warehouse'].search([('name', 'ilike','Біржа')], limit=1) # Опційно: default перший склад
     )
 
     name = fields.Integer('Номер накладної', required=True)
