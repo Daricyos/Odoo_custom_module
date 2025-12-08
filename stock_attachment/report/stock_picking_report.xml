@@ -6,14 +6,42 @@
 
         <!-- Додаємо після блоку з партнером -->
         <xpath expr="//div[@name='div_incoming_address']/div[@name='partner_header']" position="after">
-            <strong>Водій:</strong>
-            <span t-esc="o.partner_id.name or '-'"/>
+<!--            <strong>Водій:</strong>-->
+<!--            <span t-esc="o.partner_id.name or '-'"/>-->
+<!--            <br/>-->
+<!--            <strong >Водійське посвідчення №:</strong>-->
+<!--            <span t-esc="o.driver_license_number or '-'"/>-->
+<!--            <br/>-->
+<!--            <strong>Транспортний засіб №:</strong>-->
+<!--            <span t-esc="o.vehicle_number or '-'"/>-->
+
+            <strong t-if="o.partner_id.parent_id">Водій:</strong>
+            <span t-if="o.partner_id.parent_id" t-esc="o.partner_id.name or '-'"/>
             <br/>
-            <strong>Водійське посвідчення №:</strong>
-            <span t-esc="o.driver_license_number or '-'"/>
+            <strong t-if="o.driver_license_number">Водійське посвідчення №:</strong>
+            <span  t-if="o.driver_license_number" t-esc="o.driver_license_number or '-'"/>
             <br/>
-            <strong>Транспортний засіб №:</strong>
-            <span t-esc="o.vehicle_number or '-'"/>
+            <strong t-if="o.vehicle_number">Транспортний засіб №:</strong>
+            <span t-if="o.vehicle_number" t-esc="o.vehicle_number or '-'"/>
+        </xpath>
+
+<!--        <xpath expr="//table[@name='stock_move_table']" position="after">-->
+        <xpath expr="//div[contains(@class, 'page')]" position="inside">
+            <br/><br/><br/>
+            <div style="width:100%; vertical-align: top;">
+                <span>
+                    <strong>Здав (ПІБ / Підпис):</strong>
+                    _______________________________________/________________________
+                </span>
+            </div>
+            <br/><br/><br/>
+            <div style="width:100%; vertical-align: top;">
+                <span>
+                    <strong>Прийняв (ПІБ / Підпис):</strong>
+                     _______________________________________/________________________
+                </span>
+            </div>
+
         </xpath>
 
     </template>

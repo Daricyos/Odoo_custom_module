@@ -25,7 +25,11 @@ class StockPicking(models.Model):
 
     total_price = fields.Monetary('Ціна', currency_field='currency_id', compute='_compute_total_price')
     document_ids = fields.Many2many('ir.attachment', string='Завантажити документи')
-    product_quantity_t = fields.Float(compute='_compute_total_move_quantity', store=True, digits=(16, 3))
+    product_quantity_t = fields.Float(
+        string="Загальний об'єм(м³)",
+        compute='_compute_total_move_quantity',
+        store=True, digits=(16, 3)
+    )
 
     @api.depends('partner_id')
     def _compute_driver_info(self):
@@ -41,7 +45,8 @@ class StockPicking(models.Model):
     @api.depends('move_ids_without_package.price_unit')
     def _compute_total_price(self):
         for obj in self:
-            obj.total_price = sum(obj.move_ids_without_package.mapped('price_unit'))
+            # obj.total_price = sum(obj.move_ids_without_package.mapped('price_unit'))
+            obj.total_price = sum(move.price_unit * move.quantity for move in obj.move_ids_without_package)
 
     @api.depends('move_ids_without_package.product_uom_qty')
     def _compute_total_move_quantity(self):
@@ -78,7 +83,7 @@ class StockPickingType(models.Model):
     def action_receiving_wood(self):
         return {
             'type': 'ir.actions.act_window',
-            'name': 'Надходження деревени',
+            'name': 'Надходження деревини',
             'res_model': 'receiving.wood',
             'view_mode': 'form',
         }
