@@ -25,7 +25,11 @@ class StockPicking(models.Model):
 
     total_price = fields.Monetary('Ціна', currency_field='currency_id', compute='_compute_total_price')
     document_ids = fields.Many2many('ir.attachment', string='Завантажити документи')
-    product_quantity_t = fields.Float(compute='_compute_total_move_quantity', store=True, digits=(16, 3))
+    product_quantity_t = fields.Float(
+        string="Загальний об'єм(м³)",
+        compute='_compute_total_move_quantity',
+        store=True, digits=(16, 3)
+    )
 
     @api.depends('partner_id')
     def _compute_driver_info(self):
