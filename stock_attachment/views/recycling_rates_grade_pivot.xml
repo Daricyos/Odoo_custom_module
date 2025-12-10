@@ -5,29 +5,28 @@
         <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='user_id']" position="after">
-                <field name="by_product_qty" invisible="1"/>
-                <field name="total_byproduct_qty" invisible="1"/>
-                <field name="total_raw_material_qty" invisible="1"/>
+                <field name="by_product_qty" invisible="0"/>
+                <field name="total_raw_material_qty" invisible="0"/>
                 <field name="waste_ratio"
                        widget="percentage"
                        decoration-danger="waste_ratio &gt; 0.1"
                 />
             </xpath>
-            <xpath expr="//field[@name='move_raw_ids']/tree/field[@name='product_uom_qty'][@widget='mrp_should_consume']" position="attributes">
-                <attribute name="string">Норма витрати сировини</attribute>
-            </xpath>
+<!--            <xpath expr="//field[@name='move_raw_ids']/tree/field[@name='product_uom_qty'][@widget='mrp_should_consume']" position="attributes">-->
+<!--                <attribute name="string">Норма витрати сировини</attribute>-->
+<!--            </xpath>-->
             <xpath expr="//field[@name='move_raw_ids']/tree/field[@name='product_uom_qty']" position="after">
                 <field name="actual_costs"/>
 <!--                <field name="actual_yield_factor"/>-->
                 <field name="actual_yield_factor" widget="percentage"/>
             </xpath>
             <xpath expr="//field[@name='move_raw_ids']/tree" position="attributes">
-                <attribute name="decoration-danger">actual_costs > product_uom_qty</attribute>
+                <attribute name="decoration-danger">product_uom_qty &gt; actual_costs</attribute>
             </xpath>
 
-            <xpath expr="//field[@name='move_byproduct_ids']/tree" position="attributes">
-                <attribute name="decoration-danger">0</attribute>
-            </xpath>
+<!--            <xpath expr="//field[@name='move_byproduct_ids']/tree" position="attributes">-->
+<!--                <attribute name="decoration-danger">0</attribute>-->
+<!--            </xpath>-->
 
 <!--            <xpath expr="//field[@name='product_qty']" position="attributes">-->
 <!--                <attribute name="decoration-danger">waste_ratio &gt; 0.1</attribute>-->
