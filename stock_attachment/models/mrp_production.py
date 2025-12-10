@@ -63,7 +63,7 @@ class MrpProduction(models.Model):
             else:
                 production.processing_coefficient = 0.0
 
-    @api.depends('move_byproduct_ids.actual_costs', 'move_raw_ids.product_uom_qty')
+    @api.depends('by_product_qty', 'total_raw_material_qty')
     def _compute_waste_ratio(self):
         for rec in self:
             if rec.by_product_qty > 0.0 and rec.total_raw_material_qty > 0.0:
@@ -71,4 +71,13 @@ class MrpProduction(models.Model):
             else:
                 rec.waste_ratio = 0.0
 
-
+    @api.onchange('move_raw_ids')
+    def _change_byproduct_uom_qty(self):
+        for rec in self:
+            if rec.move_raw_ids and rec.move_byproduct_ids:
+                raw_qty = sum(raw.product_uom_qty for raw in rec.move_raw_ids)
+                byprod_qty = sum(byprod.product_uom_qty for byprod in rec.move_byproduct_ids)
+                byprod_fact = raw_qty - rec.product_qty
+                diff = byprod_fact - byprod_qty
+                if diff != 0.0:
+                    rec.move_byproduct_ids[0].product_uom_qty += diff
