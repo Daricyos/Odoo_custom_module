@@ -8,6 +8,11 @@ import os
 class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
+    invoice_number = fields.Integer(
+        'Номер накладної',
+        required=True,
+        tracking=True
+    )
     driver_license_number = fields.Char(
         string="Номер водійського посвідчення",
         compute='_compute_driver_info',
