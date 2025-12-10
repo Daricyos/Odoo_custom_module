@@ -81,3 +81,21 @@ class MrpProduction(models.Model):
                 diff = byprod_fact - byprod_qty
                 if diff != 0.0:
                     rec.move_byproduct_ids[0].product_uom_qty += diff
+
+    def action_change_product_qty(self):
+        for rec in self:
+            # rec.product_qty = rec.total_raw_material_qty - rec.by_product_qty
+            new_qty = rec.total_raw_material_qty - rec.by_product_qty
+            rec.env.cr.execute("""
+                UPDATE mrp_production
+                SET product_qty = %s 
+                WHERE id = %s
+            """, (new_qty, rec.id))
+            # Оновлюємо кеш
+            # rec.product_qty = new_qty
+            rec.invalidate_recordset(['product_qty'])
+            # import time
+            # time.sleep(1)
+            for raw in rec.move_raw_ids:
+                raw._compute_actual_costs()
+                raw._compute_actual_yield_factor()
