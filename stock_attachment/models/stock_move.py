@@ -35,6 +35,7 @@ class StockMoveInherit(models.Model):
                             record.raw_material_production_id.product_qty * bom_line.product_qty / record.raw_material_production_id.bom_id.product_qty,
                             bom_line.product_id.uom_id
                         )
+                        break
                     else:
                         record.actual_costs = 0
                     # print(f'{record.actual_costs=}')
