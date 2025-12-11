@@ -12,12 +12,17 @@
                        decoration-danger="waste_ratio &gt; 0.1"
                 />
             </xpath>
-<!--            <xpath expr="//field[@name='move_raw_ids']/tree/field[@name='product_uom_qty'][@widget='mrp_should_consume']" position="attributes">-->
-<!--                <attribute name="string">Норма витрати сировини</attribute>-->
-<!--            </xpath>-->
+            <xpath expr="//label[@name='bom_label']" position="before">
+                <button string="Оновити кількість"
+                        colspan="2" type="object"
+                        name="action_change_product_qty"
+                        invisible="state != 'draft'"
+                        class="btn-success"
+                        help="Оновити кількість продукту відносно компонентів і відходів"
+                />
+            </xpath>
             <xpath expr="//field[@name='move_raw_ids']/tree/field[@name='product_uom_qty']" position="after">
                 <field name="actual_costs"/>
-<!--                <field name="actual_yield_factor"/>-->
                 <field name="actual_yield_factor" widget="percentage"/>
             </xpath>
             <xpath expr="//field[@name='move_raw_ids']/tree" position="attributes">
