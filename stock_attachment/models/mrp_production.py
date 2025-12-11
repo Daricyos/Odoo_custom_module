@@ -84,18 +84,27 @@ class MrpProduction(models.Model):
 
     def action_change_product_qty(self):
         for rec in self:
-            # rec.product_qty = rec.total_raw_material_qty - rec.by_product_qty
-            new_qty = rec.total_raw_material_qty - rec.by_product_qty
-            rec.env.cr.execute("""
-                UPDATE mrp_production
-                SET product_qty = %s 
-                WHERE id = %s
-            """, (new_qty, rec.id))
-            # Оновлюємо кеш
-            # rec.product_qty = new_qty
-            rec.invalidate_recordset(['product_qty'])
-            # import time
-            # time.sleep(1)
-            for raw in rec.move_raw_ids:
-                raw._compute_actual_costs()
-                raw._compute_actual_yield_factor()
+            if rec.move_raw_ids and rec.bom_id:
+                for move_raw in rec.move_raw_ids:
+                    move_raw_qty = move_raw.product_uom_qty
+                    if rec.bom_id.bom_line_ids:
+                        for bom_line in rec.bom_id.bom_line_ids:
+                            if move_raw.product_id.id == bom_line.product_id.id and rec.bom_id.product_qty > 0 and bom_line.product_qty > 0:
+                                prod_qty = move_raw_qty * (rec.bom_id.product_qty / bom_line.product_qty)
+                                rec.product_qty = prod_qty
+                                break
+            # SQL ін'єкція, не використовуєнься
+            # new_qty = rec.total_raw_material_qty - rec.by_product_qty
+            # rec.env.cr.execute("""
+            #     UPDATE mrp_production
+            #     SET product_qty = %s
+            #     WHERE id = %s
+            # """, (new_qty, rec.id))
+            # # Оновлюємо кеш
+            # # rec.product_qty = new_qty
+            # rec.invalidate_recordset(['product_qty'])
+            # # import time
+            # # time.sleep(1)
+            # for raw in rec.move_raw_ids:
+            #     raw._compute_actual_costs()
+            #     raw._compute_actual_yield_factor()
