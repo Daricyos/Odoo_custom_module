@@ -44,6 +44,12 @@ class ReceivingWood(models.Model):
         tracking=True
     )
 
+    purchase_order_id = fields.Many2one(
+        'purchase.order',
+        string='Купівля',
+        tracking=True
+    )
+
     invoice_number = fields.Integer(
         'Номер накладної',
         required=True,
@@ -153,7 +159,111 @@ class ReceivingWood(models.Model):
         res['move_ids_without_package'] = move_lines
         return res
 
-    def action_create_operations(self):
+    def action_create_p_order_and_s_picking(self):
+        purchase_order_obj = self.env['purchase.order']
+        purchase_order_line_obj = self.env['purchase.order.line']
+
+        for record in self:
+            # Перевірка наявності продуктів з кількістю > 0
+            valid_moves = record.move_ids_without_package.filtered(lambda line: line.quantity > 0)
+
+            if not valid_moves:
+                raise ValidationError("Не знайдено продуктів з кількістю більше 0.")
+
+            # Перевірка наявності постачальника
+            if not record.partner_id:
+                raise ValidationError("Не вказано постачальника.")
+
+            # Пошук складу для надходження
+            picking_type = self.env['stock.picking.type'].search([
+                ('code', '=', 'incoming'),
+                ('warehouse_id', '!=', False)
+            ], limit=1)
+
+            if not picking_type:
+                raise ValidationError("Не знайдено типу операції для надходження.")
+
+            # Створення замовлення на купівлю
+            po_vals = {
+                'partner_id': record.partner_id.id,
+                'origin': record.name or '',
+                'currency_id': record.currency_id.id if record.currency_id else record.partner_id.currency_id.id,
+                'picking_type_id': picking_type.id,
+                'date_order': fields.Datetime.now(),
+                'invoice_number': record.invoice_number,
+                # Додаткові поля, якщо потрібно
+                # 'payment_term_id': record.partner_id.property_supplier_payment_term_id.id,
+                # 'fiscal_position_id': record.partner_id.property_account_position_id.id,
+            }
+
+            purchase_order = purchase_order_obj.create(po_vals)
+
+            # Створення рядків замовлення
+            for move_line in valid_moves:
+                # Пошук інформації про постачальника для продукту
+                seller = move_line.product_id._select_seller(
+                    partner_id=record.partner_id,
+                    quantity=move_line.quantity,
+                    uom_id=move_line.product_id.uom_po_id
+                )
+
+                po_line_vals = {
+                    'order_id': purchase_order.id,
+                    'product_id': move_line.product_id.id,
+                    'name': move_line.product_id.display_name or move_line.product_id.name,
+                    'product_qty': move_line.quantity,
+                    'product_uom': move_line.product_id.uom_po_id.id,
+                    'price_unit': move_line.price_unit if hasattr(move_line, 'price_unit') else 0.0,
+                    'date_planned': fields.Datetime.now(),
+                    'taxes_id': [(6, 0, move_line.product_id.supplier_taxes_id.ids)],
+                }
+
+                purchase_order_line_obj.create(po_line_vals)
+
+            # Оновлення стану запису
+            if purchase_order:
+                record.purchase_order_id = purchase_order.id  # Додайте поле purchase_order_id до моделі
+                # record.state = 'po_created'  # або інший стан
+                purchase_order.button_confirm()
+                picking = self.purchase_order_id.picking_ids[0] if self.purchase_order_id.picking_ids else False
+
+                if picking:
+
+                    picking.write(
+                        {
+                            'document_ids': [(6, 0, record.document_ids.ids)],
+                            'invoice_number': record.invoice_number
+                        }
+                    )
+                    # Валідуємо надходження
+                    picking.button_validate()
+                    self.stock_picking_id = picking.id
+                    self.state = 'done'
+
+                    # Повернення форми надходження, якщо потрібно
+                    # return {
+                    #     'type': 'ir.actions.act_window',
+                    #     'name': 'Надходження',
+                    #     'res_model': 'stock.picking',
+                    #     'view_mode': 'form',
+                    #     'res_id': picking.id,
+                    #     'target': 'current',
+                    # }
+
+            # Повернення форми створеного замовлення
+            return {
+                'type': 'ir.actions.act_window',
+                'name': 'Замовлення на купівлю',
+                'res_model': 'purchase.order',
+                'view_mode': 'form',
+                'res_id': purchase_order.id,
+                'target': 'current',
+            }
+
+        return True
+
+    # Не використовується
+    def action_create_stock_picking(self):
         stock_picking_obj = self.env['stock.picking']
         stock_move_obj = self.env['stock.move']
 
@@ -237,6 +347,22 @@ class ReceivingWood(models.Model):
             }
         else:
             raise UserError('Немає надходження.')
+
+    def action_view_purchase(self):
+        """
+        Smart button для перегляду надходження
+        """
+        self.ensure_one()
+        if self.purchase_order_id:
+            return {
+                'type': 'ir.actions.act_window',
+                'res_model': 'purchase.order',
+                'res_id': self.purchase_order_id.id,
+                'view_mode': 'form',
+                'target': 'current',
+            }
+        else:
+            raise UserError('Немає купівлі.')
 
 
 class ReceivingWoodLine(models.Model):

@@ -16,6 +16,12 @@ class PurchaseOrderInherit(models.Model):
         store=True
     )
 
+    invoice_number = fields.Integer(
+        'Номер накладної',
+        required=True,
+        tracking=True
+    )
+
     @api.depends('partner_id')
     def _compute_driver_info(self):
         for rec in self:
