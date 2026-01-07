@@ -10,7 +10,7 @@ class StockPicking(models.Model):
 
     invoice_number = fields.Integer(
         'Номер накладної',
-        required=True,
+        # required=True,
         tracking=True
     )
     driver_license_number = fields.Char(
