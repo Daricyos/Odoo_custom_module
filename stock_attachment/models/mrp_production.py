@@ -108,3 +108,99 @@ class MrpProduction(models.Model):
             # for raw in rec.move_raw_ids:
             #     raw._compute_actual_costs()
             #     raw._compute_actual_yield_factor()
+
+    def action_force_delete(self):
+        """Видаляє виробниче замовлення разом з усіма пов'язаними переміщеннями"""
+        for production in self:
+            # Збираємо всі пов'язані переміщення
+            moves_to_delete = self.env['stock.move']
+
+            # Переміщення сировини (move_raw_ids)
+            if production.move_raw_ids:
+                moves_to_delete |= production.move_raw_ids
+
+            # Переміщення готової продукції (move_finished_ids)
+            if production.move_finished_ids:
+                moves_to_delete |= production.move_finished_ids
+
+            # Додаткові переміщення через workorder, якщо є
+            if hasattr(production, 'workorder_ids'):
+                for workorder in production.workorder_ids:
+                    if hasattr(workorder, 'move_raw_ids'):
+                        moves_to_delete |= workorder.move_raw_ids
+                    if hasattr(workorder, 'move_finished_ids'):
+                        moves_to_delete |= workorder.move_finished_ids
+
+            # Обробляємо переміщення
+            if moves_to_delete:
+                # Спочатку обробляємо stock.move.line для done переміщень
+                done_moves = moves_to_delete.filtered(lambda m: m.state == 'done')
+
+                if done_moves:
+                    # Знаходимо всі stock.move.line для done переміщень
+                    done_move_lines = self.env['stock.move.line'].search([
+                        ('move_id', 'in', done_moves.ids)
+                    ])
+
+                    # Видаляємо stock valuation layers (бухгалтерські проводки)
+                    if done_move_lines:
+                        valuation_layers = self.env['stock.valuation.layer'].search([
+                            ('stock_move_id', 'in', done_moves.ids)
+                        ])
+                        if valuation_layers:
+                            valuation_layers.sudo().unlink()
+
+                        # Видаляємо account.move (бухгалтерські записи)
+                        account_moves = self.env['account.move'].search([
+                            ('stock_move_id', 'in', done_moves.ids)
+                        ])
+                        if account_moves:
+                            account_moves.sudo().unlink()
+
+                    # Змінюємо статус done переміщень на draft через sudo
+                    done_moves.sudo().write({'state': 'draft'})
+
+                    # Видаляємо move lines
+                    if done_move_lines:
+                        done_move_lines.sudo().unlink()
+
+                # Тепер скасовуємо всі переміщення що не в draft
+                non_draft_moves = moves_to_delete.filtered(lambda m: m.state != 'draft')
+                if non_draft_moves:
+                    non_draft_moves.sudo().write({'state': 'draft'})
+
+                # Видаляємо всі move lines
+                all_move_lines = self.env['stock.move.line'].search([
+                    ('move_id', 'in', moves_to_delete.ids)
+                ])
+                if all_move_lines:
+                    all_move_lines.sudo().unlink()
+
+                # Видаляємо самі переміщення
+                moves_to_delete.sudo().unlink()
+
+            # Видаляємо workorder, якщо є
+            if hasattr(production, 'workorder_ids') and production.workorder_ids:
+                production.workorder_ids.sudo().unlink()
+
+            # Видаляємо саме виробниче замовлення через sudo без зміни статусу
+            production.sudo().write({'state': 'cancel'})
+            production.sudo().unlink()
+
+            self.env['bus.bus']._sendone(
+                self.env.user.partner_id,
+                'simple_notification',
+                {
+                    'type': 'success',
+                    'message':  _('Виробничі замовлення та всі пов\'язані переміщення видалено'),
+                    'sticky': False,
+                }
+            )
+
+        return {
+            'type': 'ir.actions.act_window',
+            'name': _('Виробничі замовлення'),
+            'res_model': 'mrp.production',
+            'view_mode': 'tree,form',
+            'target': 'current',
+        }
